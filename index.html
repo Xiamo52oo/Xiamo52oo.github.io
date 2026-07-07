@@ -1,0 +1,1886 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>多站点系统管理后台原型</title>
+  <style>
+    :root {
+      --nav: #071b2d;
+      --nav-2: #0d2a43;
+      --line: #e4e8ef;
+      --line-2: #d8dee8;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --text: #243040;
+      --muted: #778396;
+      --blue: #1688ee;
+      --blue-2: #e9f4ff;
+      --green: #18a058;
+      --amber: #c67a16;
+      --red: #d94b4b;
+      --violet: #7258d4;
+      --shadow: 0 2px 10px rgba(15, 35, 60, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 224px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: var(--nav);
+      color: #b9c8d8;
+      min-height: 100vh;
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .brand {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 16px;
+      color: #ffffff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, #1688ee, #1bbf7a);
+      font-weight: 700;
+    }
+
+    .brand-main {
+      font-weight: 700;
+      line-height: 18px;
+    }
+
+    .brand-sub {
+      color: #8fa3b9;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .nav-section {
+      padding: 10px 0;
+    }
+
+    .nav-title {
+      padding: 10px 18px 6px;
+      color: #5f7893;
+      font-size: 12px;
+    }
+
+    .nav-item {
+      min-height: 42px;
+      width: 100%;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #b9c8d8;
+      background: transparent;
+      border: 0;
+      border-left: 3px solid transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-item.active {
+      color: #fff;
+      background: var(--nav-2);
+      border-left-color: var(--blue);
+    }
+
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      color: #9eb1c5;
+      border: 1px solid rgba(185, 200, 216, 0.5);
+      border-radius: 4px;
+      font-size: 11px;
+      flex: 0 0 auto;
+    }
+
+    .workspace {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tenant-select,
+    .search-box {
+      height: 34px;
+      border: 1px solid var(--line-2);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--text);
+      padding: 0 10px;
+      min-width: 168px;
+      outline: none;
+    }
+
+    .search-box {
+      width: 250px;
+    }
+
+    .topbar-spacer {
+      flex: 1;
+    }
+
+    .btn {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border: 1px solid var(--line-2);
+      background: #fff;
+      color: var(--text);
+      border-radius: 4px;
+      padding: 0 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .btn.primary {
+      color: #fff;
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .btn.success {
+      color: #fff;
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .icon-box {
+      width: 16px;
+      height: 16px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 3px;
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .tabs {
+      height: 42px;
+      display: flex;
+      align-items: stretch;
+      gap: 1px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      overflow-x: auto;
+    }
+
+    .tab {
+      min-width: 132px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #697486;
+      background: #fbfbfc;
+      border: 0;
+      border-right: 1px solid var(--line);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      color: var(--blue);
+      background: #fff;
+      border-bottom-color: var(--blue);
+      font-weight: 600;
+    }
+
+    .tab-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #d2d8e1;
+      flex: 0 0 auto;
+    }
+
+    .tab.active .tab-dot {
+      background: var(--blue);
+    }
+
+    main {
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .view-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+
+    .crumb {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 700;
+    }
+
+    .page-sub {
+      margin-top: 4px;
+      color: var(--muted);
+      line-height: 20px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+    }
+
+    .panel-title {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--line);
+      color: #4c5868;
+      font-weight: 600;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .field {
+      display: inline-grid;
+      grid-template-columns: auto minmax(126px, 1fr);
+      align-items: center;
+      gap: 8px;
+    }
+
+    .field label {
+      color: #5f6b7a;
+      white-space: nowrap;
+    }
+
+    .field input,
+    .field select {
+      height: 34px;
+      border: 1px solid var(--line-2);
+      border-radius: 4px;
+      padding: 0 10px;
+      min-width: 0;
+      outline: none;
+      background: #fff;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(138px, 1fr));
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 12px;
+      min-height: 88px;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-size: 22px;
+      line-height: 28px;
+      font-weight: 700;
+      color: #1f2b3a;
+    }
+
+    .metric-note {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .up {
+      color: var(--green);
+    }
+
+    .down {
+      color: var(--red);
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1180px;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    th,
+    td {
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      padding: 10px 12px;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    th {
+      color: #4d5867;
+      background: #fbfcfe;
+      font-weight: 600;
+    }
+
+    td {
+      color: #2f3947;
+    }
+
+    .table-action {
+      color: var(--blue);
+      border: 0;
+      background: transparent;
+      padding: 0;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      border: 1px solid transparent;
+    }
+
+    .status::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .status.online {
+      color: var(--green);
+      background: #edf9f2;
+      border-color: #c9ebd6;
+    }
+
+    .status.pending {
+      color: var(--amber);
+      background: #fff6e8;
+      border-color: #f4d8ae;
+    }
+
+    .status.risk {
+      color: var(--red);
+      background: #fff0f0;
+      border-color: #f3c7c7;
+    }
+
+    .status.gray {
+      color: #6d7786;
+      background: #f2f4f7;
+      border-color: #dfe4ec;
+    }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .module {
+      min-height: 116px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      background: #fff;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .module-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .module-name {
+      font-weight: 700;
+    }
+
+    .switch {
+      width: 38px;
+      height: 20px;
+      border-radius: 999px;
+      border: 0;
+      padding: 2px;
+      background: #c9d1dc;
+      cursor: pointer;
+      display: inline-flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .switch.on {
+      background: var(--blue);
+      justify-content: flex-end;
+    }
+
+    .switch span {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+    }
+
+    .module-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      min-height: 24px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 4px;
+      padding: 0 7px;
+      background: #f3f6fa;
+      color: #657386;
+      font-size: 12px;
+      border: 1px solid #e1e7f0;
+    }
+
+    .tag.blue {
+      color: var(--blue);
+      background: var(--blue-2);
+      border-color: #c8e4ff;
+    }
+
+    .tag.green {
+      color: var(--green);
+      background: #edf9f2;
+      border-color: #c8ecd5;
+    }
+
+    .tag.amber {
+      color: var(--amber);
+      background: #fff6e8;
+      border-color: #f4d8ae;
+    }
+
+    .tag.red {
+      color: var(--red);
+      background: #fff0f0;
+      border-color: #f3c7c7;
+    }
+
+    .asset-list {
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .asset-row {
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .thumb {
+      height: 46px;
+      border-radius: 5px;
+      background:
+        linear-gradient(135deg, rgba(22, 136, 238, 0.18), rgba(27, 191, 122, 0.2)),
+        repeating-linear-gradient(45deg, #f8fafc, #f8fafc 7px, #eef3f8 7px, #eef3f8 14px);
+      border: 1px solid #dfe7f0;
+    }
+
+    .asset-title {
+      font-weight: 600;
+      margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .asset-meta {
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wizard {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 14px;
+      padding: 12px;
+    }
+
+    .steps {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fbfcfe;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      color: #5b6878;
+    }
+
+    .step:last-child {
+      border-bottom: 0;
+    }
+
+    .step.active {
+      color: var(--blue);
+      background: var(--blue-2);
+      font-weight: 700;
+    }
+
+    .step-index {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      font-size: 12px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .form-control {
+      display: grid;
+      gap: 7px;
+    }
+
+    .form-control label {
+      color: #5f6b7a;
+    }
+
+    .form-control input,
+    .form-control select {
+      height: 36px;
+      border: 1px solid var(--line-2);
+      border-radius: 4px;
+      padding: 0 10px;
+      min-width: 0;
+      background: #fff;
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(128px, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .check-item {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 0 10px;
+      background: #fff;
+    }
+
+    .check-item input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--blue);
+    }
+
+    .config-layout {
+      display: grid;
+      grid-template-columns: 184px minmax(0, 1fr);
+      gap: 14px;
+      padding: 12px;
+    }
+
+    .config-menu {
+      border: 1px solid var(--line);
+      background: #fbfcfe;
+    }
+
+    .config-link {
+      width: 100%;
+      min-height: 42px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      color: #536172;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .config-link.active {
+      color: var(--blue);
+      background: #fff;
+      font-weight: 700;
+      box-shadow: inset 3px 0 0 var(--blue);
+    }
+
+    .config-section {
+      display: none;
+    }
+
+    .config-section.active {
+      display: block;
+    }
+
+    .rule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(190px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .rule {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      background: #fff;
+      min-height: 128px;
+    }
+
+    .rule-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .rule-name {
+      font-weight: 700;
+    }
+
+    .rule-desc {
+      color: var(--muted);
+      line-height: 20px;
+      min-height: 40px;
+    }
+
+    .progress {
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #edf1f6;
+      margin-top: 10px;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      background: var(--blue);
+      border-radius: inherit;
+    }
+
+    .footer-bar {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 0 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      background: #fff;
+    }
+
+    .empty-note {
+      min-height: 144px;
+      display: grid;
+      place-items: center;
+      color: #a3adbb;
+    }
+
+    .build-lanes {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .lane {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .lane-title {
+      color: #5e6a79;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .lane-count {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 30px;
+    }
+
+    .mini-chart {
+      height: 42px;
+      margin-top: 10px;
+      display: flex;
+      align-items: end;
+      gap: 5px;
+    }
+
+    .mini-chart span {
+      width: 100%;
+      min-width: 8px;
+      border-radius: 3px 3px 0 0;
+      background: linear-gradient(180deg, #1688ee, #8bc8ff);
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(480px, 92vw);
+      height: 100vh;
+      background: #fff;
+      border-left: 1px solid var(--line);
+      box-shadow: -12px 0 28px rgba(20, 35, 60, 0.16);
+      transform: translateX(104%);
+      transition: transform 0.2s ease;
+      z-index: 20;
+      display: grid;
+      grid-template-rows: 56px minmax(0, 1fr) 52px;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-head,
+    .drawer-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .drawer-foot {
+      border-bottom: 0;
+      border-top: 1px solid var(--line);
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .drawer-body {
+      overflow: auto;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 27, 45, 0.26);
+      display: none;
+      z-index: 15;
+    }
+
+    .overlay.open {
+      display: block;
+    }
+
+    @media (max-width: 1180px) {
+      .metric-grid,
+      .build-lanes,
+      .rule-grid {
+        grid-template-columns: repeat(3, minmax(150px, 1fr));
+      }
+
+      .split-grid,
+      .wizard,
+      .config-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .module-grid {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+      }
+    }
+
+    @media (max-width: 820px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        min-height: auto;
+        min-width: 0;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .brand {
+        height: auto;
+        padding: 12px 16px;
+      }
+
+      .nav-section {
+        display: flex;
+        gap: 1px;
+        padding: 0 8px 10px;
+        overflow-x: auto;
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      .nav-title {
+        display: none;
+      }
+
+      .nav-item {
+        width: auto;
+        min-width: 116px;
+        border-left: 0;
+        border-bottom: 3px solid transparent;
+        padding: 0 12px;
+      }
+
+      .nav-item.active {
+        border-left-color: transparent;
+        border-bottom-color: var(--blue);
+      }
+
+      .topbar,
+      .view-head {
+        align-items: stretch;
+        flex-wrap: wrap;
+        grid-template-columns: 1fr;
+      }
+
+      .search-box,
+      .tenant-select {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .metric-grid,
+      .build-lanes,
+      .module-grid,
+      .form-grid,
+      .check-grid,
+      .rule-grid {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div>
+          <div class="brand-main">平台总控后台</div>
+          <div class="brand-sub">多站点开站与打包</div>
+        </div>
+      </div>
+      <div class="nav-section" id="sideNav">
+        <div class="nav-title">全局运营</div>
+        <button class="nav-item active" data-view="overview"><span class="nav-icon">01</span><span>首页统计</span></button>
+        <button class="nav-item" data-view="site"><span class="nav-icon">02</span><span>站点入口</span></button>
+        <button class="nav-item" data-view="create"><span class="nav-icon">03</span><span>开站中心</span></button>
+        <button class="nav-item" data-view="package"><span class="nav-icon">04</span><span>App 打包</span></button>
+        <button class="nav-item" data-view="config"><span class="nav-icon">05</span><span>功能配置</span></button>
+        <div class="nav-title">站点配置</div>
+        <button class="nav-item" data-view="risk"><span class="nav-icon">06</span><span>风控管理</span></button>
+        <button class="nav-item" data-view="agent"><span class="nav-icon">07</span><span>代理活动</span></button>
+        <button class="nav-item" data-view="promo"><span class="nav-icon">08</span><span>优惠大厅</span></button>
+        <button class="nav-item" data-view="games"><span class="nav-icon">09</span><span>三方游戏</span></button>
+        <button class="nav-item" data-view="service"><span class="nav-icon">10</span><span>客服系统</span></button>
+        <button class="nav-item" data-view="system"><span class="nav-icon">11</span><span>系统管理</span></button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <select class="tenant-select" id="platformSelect">
+          <option value="all">全部平台</option>
+          <option value="aurora">星河体育</option>
+          <option value="atlas">蓝鲸娱乐</option>
+          <option value="nova">新城游戏</option>
+          <option value="jade">翡翠电竞</option>
+        </select>
+        <select class="tenant-select" id="siteSelect">
+          <option value="all">全部站点</option>
+        </select>
+        <input class="search-box" id="globalSearch" placeholder="搜索 SiteID / 域名 / App 名称">
+        <div class="topbar-spacer"></div>
+        <button class="btn" id="syncBtn"><span class="icon-box">R</span>同步配置</button>
+        <button class="btn primary" data-view="create"><span class="icon-box">N</span>新建站点</button>
+      </header>
+
+      <nav class="tabs" id="tabs">
+        <button class="tab active" data-view="overview"><span class="tab-dot"></span>首页统计</button>
+        <button class="tab" data-view="site"><span class="tab-dot"></span>站点总览</button>
+        <button class="tab" data-view="create"><span class="tab-dot"></span>开站向导</button>
+        <button class="tab" data-view="package"><span class="tab-dot"></span>App包管理</button>
+        <button class="tab" data-view="config"><span class="tab-dot"></span>配置中心</button>
+        <button class="tab" data-view="risk"><span class="tab-dot"></span>风控标签</button>
+      </nav>
+
+      <main id="main"></main>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <section class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <strong id="drawerTitle">站点详情</strong>
+      <button class="btn" id="closeDrawer">关闭</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+    <div class="drawer-foot">
+      <button class="btn">保存草稿</button>
+      <button class="btn primary">发布配置</button>
+    </div>
+  </section>
+
+  <script>
+    const sites = [
+      { id: "S1001", platform: "星河体育", app: "星河体育 Pro", domain: "xh-sport.com", package: "iOS / Android / H5", users: 42860, register: 1268, firstPay: 392, recharge: "¥8,482,000", risk: 37, promoCost: "¥412,500", service: 28, status: "online", version: "v4.8.2" },
+      { id: "S1002", platform: "蓝鲸娱乐", app: "蓝鲸娱乐", domain: "bluegame.net", package: "Android / H5", users: 31820, register: 835, firstPay: 244, recharge: "¥5,126,300", risk: 21, promoCost: "¥236,800", service: 17, status: "online", version: "v4.8.2" },
+      { id: "S1003", platform: "新城游戏", app: "新城游戏", domain: "nova-play.cc", package: "iOS / Android", users: 18760, register: 516, firstPay: 128, recharge: "¥2,907,800", risk: 14, promoCost: "¥142,000", service: 36, status: "pending", version: "v4.7.9" },
+      { id: "S1004", platform: "翡翠电竞", app: "翡翠电竞", domain: "jade-esports.com", package: "iOS / Android / H5", users: 51270, register: 1482, firstPay: 463, recharge: "¥10,062,900", risk: 68, promoCost: "¥589,400", service: 44, status: "risk", version: "v4.8.1" },
+      { id: "S1005", platform: "鲸跃棋牌", app: "鲸跃棋牌", domain: "joy-card.net", package: "H5", users: 9360, register: 186, firstPay: 54, recharge: "¥876,200", risk: 9, promoCost: "¥51,600", service: 7, status: "gray", version: "v4.6.8" }
+    ];
+
+    const metrics = [
+      ["总站点数", "32", "本周新增 4 个", "up"],
+      ["运行中 App", "86", "7 个待审核", "up"],
+      ["昨日注册", "8,642", "环比 +12.4%", "up"],
+      ["昨日充值", "¥31.8M", "环比 +6.8%", "up"],
+      ["风控命中", "426", "高危 39 条", "down"],
+      ["客服待处理", "132", "超时 11 单", "down"]
+    ];
+
+    const modules = [
+      { name: "会员管理", on: true, tags: ["等级", "实名", "VIP"], owner: "会员组" },
+      { name: "财务中心", on: true, tags: ["充值", "提现", "账变"], owner: "财务组" },
+      { name: "合营代理中心", on: true, tags: ["代理方案", "分红", "邀请"], owner: "代理组" },
+      { name: "活动管理", on: true, tags: ["首充", "返利", "任务"], owner: "运营组" },
+      { name: "优惠大厅", on: true, tags: ["大厅配置", "领取条件", "展示位"], owner: "运营组" },
+      { name: "三方游戏", on: true, tags: ["PG", "JILI", "AG"], owner: "游戏组" },
+      { name: "返水管理", on: false, tags: ["日返水", "周返水", "黑名单"], owner: "财务组" },
+      { name: "风控管理", on: true, tags: ["标签", "限额", "稽核"], owner: "安全组" },
+      { name: "客服系统", on: true, tags: ["在线客服", "工单", "质检"], owner: "客服组" }
+    ];
+
+    const moduleRows = [
+      ["首页统计", "启用", "首页 / 数据大盘", "首页统计 / 报表系统", "H5, iOS, Android", "继承全局", "2026-07-03 09:12"],
+      ["会员管理", "启用", "会员中心 / VIP", "会员列表 / 等级配置", "H5, iOS, Android", "实名 + 设备指纹", "2026-07-02 21:30"],
+      ["代理中心", "启用", "代理入口 / 邀请页", "代理方案 / 分红报表", "H5, Android", "代理审核标签", "2026-07-02 19:16"],
+      ["优惠大厅", "启用", "优惠大厅 / 活动详情", "优惠活动 / 发放记录", "H5, iOS, Android", "流水稽核标签", "2026-07-03 10:05"],
+      ["三方游戏", "启用", "游戏大厅 / 分类页", "厂商管理 / 游戏上下架", "H5, iOS, Android", "厂商限额", "2026-07-01 18:20"],
+      ["返水管理", "关闭", "隐藏", "返水方案 / 发放记录", "无", "黑名单拦截", "2026-06-30 15:00"],
+      ["客服系统", "启用", "客服入口 / 帮助中心", "客服配置 / 工单", "H5, iOS, Android", "敏感词标签", "2026-07-02 08:45"]
+    ];
+
+    const packageRows = [
+      ["PKG-20260703-01", "星河体育 Pro", "iOS", "v4.8.2", "素材校验", "灰度包", "68%", "2026-07-03 15:22"],
+      ["PKG-20260703-02", "蓝鲸娱乐", "Android", "v4.8.2", "构建中", "正式包", "42%", "2026-07-03 15:40"],
+      ["PKG-20260702-09", "翡翠电竞", "iOS", "v4.8.1", "审核中", "提审包", "100%", "2026-07-02 22:18"],
+      ["PKG-20260702-06", "新城游戏", "H5", "v4.7.9", "已发布", "H5热更", "100%", "2026-07-02 17:02"]
+    ];
+
+    const configData = {
+      risk: {
+        title: "风控标签",
+        rules: [
+          ["新设备高频注册", "同设备 30 分钟注册超过 5 个账号", "启用", "82"],
+          ["充值提现倒挂", "提现金额超过充值 160% 且无有效流水", "启用", "64"],
+          ["代理团伙关联", "代理下级账号设备、IP、收款信息重叠", "启用", "58"]
+        ],
+        table: [
+          ["RISK-001", "设备指纹异常", "自动打标", "限制提现", "全站点继承", "启用"],
+          ["RISK-014", "银行卡重复", "人工复核", "冻结优惠领取", "S1004 单独增强", "启用"],
+          ["RISK-021", "活动薅羊毛", "自动打标", "限制活动", "活动中心联动", "启用"]
+        ]
+      },
+      agent: {
+        title: "代理活动",
+        rules: [
+          ["邀请首充奖励", "代理邀请用户完成首充后发放阶梯奖励", "启用", "72"],
+          ["团队周分红", "按团队有效投注和净输赢计算分红", "启用", "55"],
+          ["代理晋级任务", "注册、首充、活跃下级组合达标", "草稿", "31"]
+        ],
+        table: [
+          ["AG-1001", "邀请首充 18%", "首充金额", "自动发放", "所有站点", "启用"],
+          ["AG-1008", "团队周分红", "有效投注", "财务复核", "星河体育", "启用"],
+          ["AG-1012", "代理拉新赛", "注册 + 首充", "定时榜单", "翡翠电竞", "草稿"]
+        ]
+      },
+      promo: {
+        title: "优惠大厅",
+        rules: [
+          ["首充礼包", "首充金额阶梯赠送，展示在首页首屏", "启用", "90"],
+          ["周末返水", "指定厂商有效投注返水", "启用", "63"],
+          ["节日活动图", "按站点素材自动替换活动主视觉", "启用", "76"]
+        ],
+        table: [
+          ["PR-001", "首充豪礼", "首充", "流水 12 倍", "首页 + 优惠大厅", "启用"],
+          ["PR-011", "电竞周赛", "投注任务", "流水 8 倍", "翡翠电竞", "启用"],
+          ["PR-026", "新手七日礼", "连续登录", "流水 3 倍", "新站模板", "草稿"]
+        ]
+      },
+      games: {
+        title: "三方游戏",
+        rules: [
+          ["厂商接入", "统一维护三方厂商密钥、回调和限额", "启用", "84"],
+          ["游戏上下架", "按站点配置分类、热门位和维护状态", "启用", "70"],
+          ["额度转换", "钱包、免转、转账模式按站点切换", "启用", "46"]
+        ],
+        table: [
+          ["G-AG", "AG 真人", "免转钱包", "在线", "全站点", "启用"],
+          ["G-PG", "PG 电子", "转账钱包", "维护窗口 04:00", "S1001, S1002", "启用"],
+          ["G-JILI", "JILI 电子", "免转钱包", "限额策略 B", "新站模板", "启用"]
+        ]
+      },
+      service: {
+        title: "客服系统",
+        rules: [
+          ["在线客服入口", "按站点配置客服链接、浮窗和入口文案", "启用", "88"],
+          ["工单分类", "充值、提现、活动、账号四类工单流转", "启用", "61"],
+          ["质检标签", "敏感词、超时、重复咨询自动打标", "启用", "44"]
+        ],
+        table: [
+          ["CS-001", "在线客服 A", "H5 + App", "24 小时", "星河体育", "启用"],
+          ["CS-009", "工单中心", "后台", "SLA 15 分钟", "所有站点", "启用"],
+          ["CS-014", "帮助中心", "H5 + App", "多语言待接入", "新城游戏", "草稿"]
+        ]
+      }
+    };
+
+    let state = {
+      view: "overview",
+      section: "risk",
+      selectedSite: "all",
+      search: ""
+    };
+
+    const main = document.getElementById("main");
+    const siteSelect = document.getElementById("siteSelect");
+    const globalSearch = document.getElementById("globalSearch");
+    const drawer = document.getElementById("drawer");
+    const overlay = document.getElementById("overlay");
+
+    sites.forEach(site => {
+      const option = document.createElement("option");
+      option.value = site.id;
+      option.textContent = `${site.id} ${site.app}`;
+      siteSelect.appendChild(option);
+    });
+
+    function numberCN(value) {
+      return value.toLocaleString("zh-CN");
+    }
+
+    function selectedSite() {
+      return sites.find(site => site.id === state.selectedSite) || sites[0];
+    }
+
+    function statusLabel(status) {
+      const map = {
+        online: ["online", "运行中"],
+        pending: ["pending", "配置待发布"],
+        risk: ["risk", "风控预警"],
+        gray: ["gray", "灰度中"]
+      };
+      const item = map[status] || map.gray;
+      return `<span class="status ${item[0]}">${item[1]}</span>`;
+    }
+
+    function setView(view, section) {
+      const configViews = ["risk", "agent", "promo", "games", "service"];
+      state.view = configViews.includes(view) ? "config" : view;
+      state.section = section || (configViews.includes(view) ? view : state.section);
+      syncActive(view);
+      render();
+    }
+
+    function syncActive(sourceView) {
+      const activeKey = sourceView || state.view;
+      document.querySelectorAll("[data-view]").forEach(el => {
+        const dataView = el.dataset.view;
+        const isActive = dataView === activeKey || (state.view === "config" && dataView === state.section);
+        el.classList.toggle("active", isActive);
+      });
+      document.querySelectorAll(".tab").forEach(el => {
+        const dataView = el.dataset.view;
+        const isActive = dataView === state.view || (state.view === "config" && dataView === state.section);
+        el.classList.toggle("active", isActive);
+      });
+    }
+
+    function renderHead(title, sub, actions = "") {
+      return `
+        <div class="view-head">
+          <div>
+            <div class="crumb">平台总控 / ${title}</div>
+            <h1 class="page-title">${title}</h1>
+            <div class="page-sub">${sub}</div>
+          </div>
+          <div>${actions}</div>
+        </div>
+      `;
+    }
+
+    function renderMetrics() {
+      return `
+        <section class="panel">
+          <div class="panel-title">
+            <span>全站点实时指标</span>
+            <span class="tag blue">统计时间 2026-07-03 16:00</span>
+          </div>
+          <div class="metric-grid">
+            ${metrics.map(item => `
+              <div class="metric">
+                <div class="metric-label">${item[0]}</div>
+                <div class="metric-value">${item[1]}</div>
+                <div class="metric-note ${item[3]}">${item[2]}</div>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function filteredSites() {
+      const text = state.search.trim().toLowerCase();
+      return sites.filter(site => {
+        const inSite = state.selectedSite === "all" || site.id === state.selectedSite;
+        const inSearch = !text || [site.id, site.platform, site.app, site.domain].join(" ").toLowerCase().includes(text);
+        return inSite && inSearch;
+      });
+    }
+
+    function renderSiteTable(rows = filteredSites()) {
+      return `
+        <section class="panel">
+          <div class="toolbar">
+            <div class="field">
+              <label>SiteID</label>
+              <input value="${state.selectedSite === "all" ? "" : state.selectedSite}" placeholder="全部">
+            </div>
+            <div class="field">
+              <label>端包</label>
+              <select>
+                <option>全部</option>
+                <option>iOS</option>
+                <option>Android</option>
+                <option>H5</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>统计时间</label>
+              <input value="2026-07-01 至 2026-07-03">
+            </div>
+            <button class="btn primary"><span class="icon-box">Q</span>查询</button>
+            <button class="btn"><span class="icon-box">E</span>导出</button>
+          </div>
+          <div class="panel-title">
+            <span>所有 App / 站点数据</span>
+            <span class="tag">${rows.length} 个站点</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>SiteID</th>
+                  <th>平台 / App</th>
+                  <th>站点域名</th>
+                  <th>端包</th>
+                  <th>用户数</th>
+                  <th>昨日注册</th>
+                  <th>首充人数</th>
+                  <th>总充值</th>
+                  <th>风控命中</th>
+                  <th>活动成本</th>
+                  <th>客服待处理</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.map(site => `
+                  <tr>
+                    <td>${site.id}</td>
+                    <td><strong>${site.platform}</strong><br><span class="asset-meta">${site.app} ${site.version}</span></td>
+                    <td>${site.domain}</td>
+                    <td>${site.package}</td>
+                    <td>${numberCN(site.users)}</td>
+                    <td>${numberCN(site.register)}</td>
+                    <td>${numberCN(site.firstPay)}</td>
+                    <td>${site.recharge}</td>
+                    <td>${site.risk}</td>
+                    <td>${site.promoCost}</td>
+                    <td>${site.service}</td>
+                    <td>${statusLabel(site.status)}</td>
+                    <td>
+                      <button class="table-action" data-enter="${site.id}">进入站点</button>
+                      <button class="table-action" data-detail="${site.id}">配置</button>
+                      <button class="table-action" data-pack="${site.id}">打包</button>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+          <div class="footer-bar">共 ${rows.length} 条　每页 10 条</div>
+        </section>
+      `;
+    }
+
+    function renderOverview() {
+      main.innerHTML = `
+        ${renderHead("首页统计", "统一查看所有站点、App 端包、运营数据、风控预警和客服待处理。", `
+          <button class="btn primary" data-view="create"><span class="icon-box">N</span>快速开站</button>
+          <button class="btn" data-view="package"><span class="icon-box">B</span>查看打包</button>
+        `)}
+        ${renderMetrics()}
+        ${renderSiteTable()}
+      `;
+      bindMainActions();
+    }
+
+    function renderSite() {
+      const site = selectedSite();
+      main.innerHTML = `
+        ${renderHead("站点入口", `${site.id} ${site.app}：查看该站点的菜单、素材、功能差异和发布状态。`, `
+          <button class="btn" data-detail="${site.id}"><span class="icon-box">C</span>站点配置</button>
+          <button class="btn primary" data-pack="${site.id}"><span class="icon-box">B</span>生成端包</button>
+        `)}
+        <section class="panel">
+          <div class="panel-title">
+            <span>站点功能开关</span>
+            <span class="tag blue">${site.platform} / ${site.domain}</span>
+          </div>
+          <div class="module-grid">
+            ${modules.map((module, index) => `
+              <article class="module">
+                <div class="module-top">
+                  <span class="module-name">${module.name}</span>
+                  <button class="switch ${module.on ? "on" : ""}" aria-label="${module.name}"><span></span></button>
+                </div>
+                <div class="module-tags">
+                  ${module.tags.map(tag => `<span class="tag ${index % 3 === 0 ? "blue" : index % 3 === 1 ? "green" : "amber"}">${tag}</span>`).join("")}
+                </div>
+                <div class="asset-meta">归属：${module.owner}　策略：${module.on ? "继承模板" : "站点关闭"}</div>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+
+        <div class="split-grid">
+          <section class="panel">
+            <div class="panel-title">
+              <span>菜单与功能差异</span>
+              <span class="tag">${moduleRows.length} 条</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>模块</th>
+                    <th>状态</th>
+                    <th>前端菜单</th>
+                    <th>后台菜单</th>
+                    <th>端覆盖</th>
+                    <th>风控策略</th>
+                    <th>最后发布</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${moduleRows.map(row => `
+                    <tr>
+                      <td>${row[0]}</td>
+                      <td><span class="status ${row[1] === "启用" ? "online" : "gray"}">${row[1]}</span></td>
+                      <td>${row[2]}</td>
+                      <td>${row[3]}</td>
+                      <td>${row[4]}</td>
+                      <td>${row[5]}</td>
+                      <td>${row[6]}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title">
+              <span>App 素材与推广图</span>
+              <button class="btn"><span class="icon-box">U</span>上传</button>
+            </div>
+            <div class="asset-list">
+              ${[
+                ["App Logo", "1024x1024 PNG", "已发布"],
+                ["启动屏", "1242x2688 JPG", "待审核"],
+                ["首页 Banner", "750x300 JPG，6 张", "已发布"],
+                ["活动主图", "优惠大厅，12 张", "草稿"],
+                ["代理推广图", "邀请页，4 张", "已发布"]
+              ].map(item => `
+                <div class="asset-row">
+                  <div class="thumb"></div>
+                  <div>
+                    <div class="asset-title">${item[0]}</div>
+                    <div class="asset-meta">${item[1]}</div>
+                  </div>
+                  <span class="tag ${item[2] === "已发布" ? "green" : item[2] === "待审核" ? "amber" : "blue"}">${item[2]}</span>
+                </div>
+              `).join("")}
+            </div>
+          </section>
+        </div>
+      `;
+      bindMainActions();
+    }
+
+    function renderCreate() {
+      main.innerHTML = `
+        ${renderHead("开站向导", "复制统一代码和标准功能模板，按站点做配置加减法，再生成 H5、iOS、Android 端包。", `
+          <button class="btn"><span class="icon-box">T</span>复制模板</button>
+          <button class="btn success"><span class="icon-box">P</span>创建并发布</button>
+        `)}
+        <section class="panel">
+          <div class="panel-title">
+            <span>快速开站</span>
+            <span class="tag blue">模板：标准娱乐平台 v4.8.2</span>
+          </div>
+          <div class="wizard">
+            <div class="steps">
+              ${["基础信息", "功能模板", "三方接入", "素材配置", "打包发布"].map((step, index) => `
+                <div class="step ${index === 1 ? "active" : ""}">
+                  <span class="step-index">${index + 1}</span>
+                  <span>${step}</span>
+                </div>
+              `).join("")}
+            </div>
+            <div>
+              <div class="form-grid">
+                <div class="form-control">
+                  <label>平台名称</label>
+                  <input value="极光娱乐">
+                </div>
+                <div class="form-control">
+                  <label>SiteID</label>
+                  <input value="S1033">
+                </div>
+                <div class="form-control">
+                  <label>主域名</label>
+                  <input value="aurora-play.com">
+                </div>
+                <div class="form-control">
+                  <label>App 名称</label>
+                  <input value="极光娱乐">
+                </div>
+                <div class="form-control">
+                  <label>币种</label>
+                  <select><option>CNY</option><option>USDT</option><option>VND</option></select>
+                </div>
+                <div class="form-control">
+                  <label>环境</label>
+                  <select><option>生产站</option><option>预发布站</option><option>测试站</option></select>
+                </div>
+              </div>
+              <div class="check-grid">
+                ${["会员管理", "财务中心", "代理中心", "活动管理", "优惠大厅", "三方游戏", "风控管理", "客服系统", "返水管理", "消息系统", "报表系统", "系统管理"].map((item, index) => `
+                  <label class="check-item"><input type="checkbox" ${index < 8 ? "checked" : ""}>${item}</label>
+                `).join("")}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <span>开站发布清单</span>
+            <span class="tag amber">5 项待确认</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>项目</th>
+                  <th>配置来源</th>
+                  <th>当前值</th>
+                  <th>状态</th>
+                  <th>责任组</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${[
+                  ["代码版本", "统一代码仓", "v4.8.2", "已锁定", "技术组"],
+                  ["功能菜单", "标准模板", "启用 8 / 12", "待发布", "产品组"],
+                  ["游戏厂商", "三方配置", "AG, PG, JILI", "待校验", "游戏组"],
+                  ["客服入口", "客服配置", "在线客服 A", "待确认", "客服组"],
+                  ["活动素材", "素材库", "Logo 1 / Banner 6", "待审核", "运营组"]
+                ].map(row => `
+                  <tr>
+                    <td>${row[0]}</td>
+                    <td>${row[1]}</td>
+                    <td>${row[2]}</td>
+                    <td><span class="status ${row[3] === "已锁定" ? "online" : "pending"}">${row[3]}</span></td>
+                    <td>${row[4]}</td>
+                    <td><button class="table-action">编辑</button><button class="table-action">查看记录</button></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      `;
+      bindMainActions();
+    }
+
+    function renderPackage() {
+      main.innerHTML = `
+        ${renderHead("App包管理", "统一代码按不同站点输出不同端包，站点差异来自 Logo、推广图、活动图、域名和配置。", `
+          <button class="btn"><span class="icon-box">V</span>版本配置</button>
+          <button class="btn primary"><span class="icon-box">B</span>新建打包</button>
+        `)}
+        <section class="panel">
+          <div class="panel-title">
+            <span>打包流水线</span>
+            <span class="tag blue">当前版本 v4.8.2</span>
+          </div>
+          <div class="build-lanes">
+            ${[
+              ["素材校验", "12", [20, 44, 62, 38, 72, 56]],
+              ["Android 构建", "7", [36, 54, 40, 68, 82, 64]],
+              ["iOS 提审", "5", [28, 34, 72, 58, 48, 76]],
+              ["H5 热更", "18", [50, 70, 44, 86, 62, 90]]
+            ].map(lane => `
+              <div class="lane">
+                <div class="lane-title">${lane[0]}</div>
+                <div class="lane-count">${lane[1]}</div>
+                <div class="asset-meta">今日任务</div>
+                <div class="mini-chart">${lane[2].map(v => `<span style="height:${v}%"></span>`).join("")}</div>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="toolbar">
+            <div class="field"><label>App</label><input placeholder="App 名称"></div>
+            <div class="field"><label>端</label><select><option>全部</option><option>iOS</option><option>Android</option><option>H5</option></select></div>
+            <div class="field"><label>状态</label><select><option>全部</option><option>构建中</option><option>审核中</option><option>已发布</option></select></div>
+            <button class="btn primary"><span class="icon-box">Q</span>查询</button>
+          </div>
+          <div class="panel-title">
+            <span>打包任务</span>
+            <span class="tag">${packageRows.length} 条</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>任务号</th>
+                  <th>App</th>
+                  <th>端</th>
+                  <th>版本</th>
+                  <th>状态</th>
+                  <th>包类型</th>
+                  <th>进度</th>
+                  <th>创建时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${packageRows.map(row => `
+                  <tr>
+                    <td>${row[0]}</td>
+                    <td>${row[1]}</td>
+                    <td>${row[2]}</td>
+                    <td>${row[3]}</td>
+                    <td><span class="status ${row[4] === "已发布" ? "online" : row[4] === "审核中" ? "pending" : "gray"}">${row[4]}</span></td>
+                    <td>${row[5]}</td>
+                    <td><div class="progress"><span style="width:${row[6]}"></span></div></td>
+                    <td>${row[7]}</td>
+                    <td><button class="table-action">日志</button><button class="table-action">下载</button><button class="table-action">重试</button></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      `;
+      bindMainActions();
+    }
+
+    function renderConfig() {
+      const active = configData[state.section] || configData.risk;
+      main.innerHTML = `
+        ${renderHead("配置中心", `${active.title}：按全局模板配置，再允许单站点覆盖或关闭。`, `
+          <button class="btn"><span class="icon-box">D</span>复制到站点</button>
+          <button class="btn primary"><span class="icon-box">P</span>发布配置</button>
+        `)}
+        <section class="panel">
+          <div class="config-layout">
+            <div class="config-menu">
+              ${[
+                ["risk", "风控标签"],
+                ["agent", "代理活动"],
+                ["promo", "优惠大厅"],
+                ["games", "三方游戏"],
+                ["service", "客服系统"]
+              ].map(item => `
+                <button class="config-link ${state.section === item[0] ? "active" : ""}" data-section="${item[0]}">
+                  <span>${item[1]}</span>
+                  <span>${item[0] === "risk" ? "426" : item[0] === "agent" ? "18" : item[0] === "promo" ? "34" : item[0] === "games" ? "96" : "12"}</span>
+                </button>
+              `).join("")}
+            </div>
+            <div>
+              <div class="rule-grid">
+                ${active.rules.map((rule, index) => `
+                  <article class="rule">
+                    <div class="rule-head">
+                      <span class="rule-name">${rule[0]}</span>
+                      <span class="tag ${rule[2] === "启用" ? "green" : "amber"}">${rule[2]}</span>
+                    </div>
+                    <div class="rule-desc">${rule[1]}</div>
+                    <div class="asset-meta">覆盖率 ${rule[3]}%</div>
+                    <div class="progress"><span style="width:${rule[3]}%; background:${index === 0 ? "var(--blue)" : index === 1 ? "var(--green)" : "var(--violet)"}"></span></div>
+                  </article>
+                `).join("")}
+              </div>
+              <div class="panel" style="box-shadow:none; margin-bottom:0;">
+                <div class="panel-title">
+                  <span>${active.title}配置列表</span>
+                  <button class="btn"><span class="icon-box">N</span>新增</button>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>触发条件</th>
+                        <th>处理方式</th>
+                        <th>生效范围</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${active.table.map(row => `
+                        <tr>
+                          <td>${row[0]}</td>
+                          <td>${row[1]}</td>
+                          <td>${row[2]}</td>
+                          <td>${row[3]}</td>
+                          <td>${row[4]}</td>
+                          <td><span class="status ${row[5] === "启用" ? "online" : "pending"}">${row[5]}</span></td>
+                          <td><button class="table-action">编辑</button><button class="table-action">复制</button><button class="table-action">记录</button></td>
+                        </tr>
+                      `).join("")}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      `;
+      bindMainActions();
+    }
+
+    function renderSystem() {
+      main.innerHTML = `
+        ${renderHead("系统管理", "角色权限、菜单模板、发布审批、操作日志和多环境参数。", `
+          <button class="btn"><span class="icon-box">A</span>审批流</button>
+          <button class="btn primary"><span class="icon-box">R</span>角色授权</button>
+        `)}
+        <section class="panel">
+          <div class="panel-title">
+            <span>平台系统菜单</span>
+            <span class="tag blue">超级管理员</span>
+          </div>
+          <div class="module-grid">
+            ${["角色权限", "菜单模板", "发布审批", "操作日志", "环境参数", "数据字典", "API 密钥", "白名单", "版本记录"].map((item, index) => `
+              <article class="module">
+                <div class="module-top">
+                  <span class="module-name">${item}</span>
+                  <span class="tag ${index < 4 ? "blue" : index < 7 ? "green" : "amber"}">${index < 6 ? "启用" : "受限"}</span>
+                </div>
+                <div class="asset-meta">最近更新：2026-07-${String(3 - (index % 3)).padStart(2, "0")} ${10 + index}:30</div>
+                <div class="module-tags">
+                  <span class="tag">总控</span>
+                  <span class="tag">站点继承</span>
+                </div>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `;
+      bindMainActions();
+    }
+
+    function render() {
+      if (state.view === "overview") renderOverview();
+      if (state.view === "site") renderSite();
+      if (state.view === "create") renderCreate();
+      if (state.view === "package") renderPackage();
+      if (state.view === "config") renderConfig();
+      if (state.view === "system") renderSystem();
+      syncActive(state.view === "config" ? state.section : state.view);
+    }
+
+    function bindMainActions() {
+      main.querySelectorAll("[data-view]").forEach(button => {
+        button.addEventListener("click", () => setView(button.dataset.view));
+      });
+      main.querySelectorAll("[data-enter]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.selectedSite = button.dataset.enter;
+          siteSelect.value = state.selectedSite;
+          setView("site");
+        });
+      });
+      main.querySelectorAll("[data-detail]").forEach(button => {
+        button.addEventListener("click", () => openDrawer(button.dataset.detail));
+      });
+      main.querySelectorAll("[data-pack]").forEach(button => {
+        button.addEventListener("click", () => setView("package"));
+      });
+      main.querySelectorAll("[data-section]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.section = button.dataset.section;
+          render();
+        });
+      });
+      main.querySelectorAll(".switch").forEach(button => {
+        button.addEventListener("click", () => button.classList.toggle("on"));
+      });
+    }
+
+    function openDrawer(siteId) {
+      const site = sites.find(item => item.id === siteId) || selectedSite();
+      document.getElementById("drawerTitle").textContent = `${site.id} ${site.app} 配置`;
+      document.getElementById("drawerBody").innerHTML = `
+        <div class="form-control">
+          <label>平台名称</label>
+          <input value="${site.platform}">
+        </div>
+        <div class="form-control">
+          <label>App 名称</label>
+          <input value="${site.app}">
+        </div>
+        <div class="form-control">
+          <label>主域名</label>
+          <input value="${site.domain}">
+        </div>
+        <div class="form-control">
+          <label>端包范围</label>
+          <input value="${site.package}">
+        </div>
+        <div class="form-control">
+          <label>客服系统</label>
+          <select><option>在线客服 A</option><option>在线客服 B</option><option>第三方客服 SDK</option></select>
+        </div>
+        <div class="form-control">
+          <label>风控模板</label>
+          <select><option>标准风险模板</option><option>高敏风控模板</option><option>轻量模板</option></select>
+        </div>
+        <div>
+          <div class="asset-title">功能加减法</div>
+          <div class="check-grid" style="grid-template-columns: repeat(2, minmax(120px, 1fr));">
+            ${modules.slice(0, 8).map((module, index) => `
+              <label class="check-item"><input type="checkbox" ${index !== 6 ? "checked" : ""}>${module.name}</label>
+            `).join("")}
+          </div>
+        </div>
+      `;
+      drawer.classList.add("open");
+      overlay.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove("open");
+      overlay.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+    }
+
+    document.getElementById("sideNav").addEventListener("click", event => {
+      const button = event.target.closest("[data-view]");
+      if (button) setView(button.dataset.view);
+    });
+
+    document.getElementById("tabs").addEventListener("click", event => {
+      const button = event.target.closest("[data-view]");
+      if (button) setView(button.dataset.view);
+    });
+
+    document.querySelectorAll(".topbar [data-view]").forEach(button => {
+      button.addEventListener("click", () => setView(button.dataset.view));
+    });
+
+    siteSelect.addEventListener("change", () => {
+      state.selectedSite = siteSelect.value;
+      if (state.selectedSite !== "all") setView("site");
+      else render();
+    });
+
+    globalSearch.addEventListener("input", () => {
+      state.search = globalSearch.value;
+      if (state.view !== "overview") state.view = "overview";
+      render();
+    });
+
+    document.getElementById("syncBtn").addEventListener("click", () => {
+      const original = document.getElementById("syncBtn").innerHTML;
+      document.getElementById("syncBtn").innerHTML = '<span class="icon-box">S</span>已同步';
+      setTimeout(() => { document.getElementById("syncBtn").innerHTML = original; }, 1200);
+    });
+
+    document.getElementById("closeDrawer").addEventListener("click", closeDrawer);
+    overlay.addEventListener("click", closeDrawer);
+
+    render();
+  </script>
+</body>
+</html>
