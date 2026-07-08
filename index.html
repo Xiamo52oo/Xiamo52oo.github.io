@@ -860,6 +860,326 @@
       background: linear-gradient(180deg, #1688ee, #8bc8ff);
     }
 
+    .motherboard {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.88fr) minmax(0, 1.12fr);
+      gap: 14px;
+      padding: 12px;
+      align-items: stretch;
+    }
+
+    .core-card {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background:
+        linear-gradient(135deg, rgba(22, 136, 238, 0.09), rgba(24, 160, 88, 0.08)),
+        #fff;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .core-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .core-name {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .core-desc {
+      color: #5f6b7a;
+      line-height: 22px;
+    }
+
+    .source-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(118px, 1fr));
+      gap: 8px;
+    }
+
+    .flow-node {
+      min-height: 78px;
+      border: 1px solid #dbe4ef;
+      border-radius: 6px;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .flow-index {
+      width: 22px;
+      height: 22px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--blue-2);
+      color: var(--blue);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .flow-name {
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .flow-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .twins-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .twin-card {
+      min-height: 160px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .twin-top {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .app-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1688ee, #18a058);
+    }
+
+    .app-logo.violet {
+      background: linear-gradient(135deg, #7258d4, #1688ee);
+    }
+
+    .app-logo.amber {
+      background: linear-gradient(135deg, #c67a16, #d94b4b);
+    }
+
+    .app-logo.green {
+      background: linear-gradient(135deg, #18a058, #7aa52a);
+    }
+
+    .app-name {
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .app-sub {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .diff-row {
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 8px;
+      color: #5d6878;
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .diff-row strong {
+      color: #374252;
+    }
+
+    .query-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 14px;
+      padding: 12px;
+    }
+
+    .quick-query {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      background: #fbfcfe;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .query-mode {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .mode-btn {
+      height: 34px;
+      border: 1px solid var(--line-2);
+      background: #fff;
+      color: #536172;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .mode-btn.active {
+      color: var(--blue);
+      border-color: var(--blue);
+      background: var(--blue-2);
+      font-weight: 700;
+    }
+
+    .isolation-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .isolation-card {
+      min-height: 132px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      gap: 9px;
+      align-content: start;
+    }
+
+    .isolation-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      color: var(--blue);
+      background: var(--blue-2);
+      border: 1px solid #c8e4ff;
+      font-weight: 800;
+    }
+
+    .skin-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(170px, 1fr));
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .skin-card {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .skin-preview {
+      height: 86px;
+      background:
+        linear-gradient(135deg, rgba(22, 136, 238, 0.2), rgba(24, 160, 88, 0.22)),
+        repeating-linear-gradient(90deg, #f7f9fc, #f7f9fc 12px, #eef3f8 12px, #eef3f8 24px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .skin-preview.dark {
+      background:
+        linear-gradient(135deg, rgba(7, 27, 45, 0.95), rgba(22, 136, 238, 0.55)),
+        repeating-linear-gradient(45deg, #15283a, #15283a 10px, #20384f 10px, #20384f 20px);
+    }
+
+    .skin-preview.green {
+      background:
+        linear-gradient(135deg, rgba(24, 160, 88, 0.32), rgba(241, 250, 238, 0.92)),
+        repeating-linear-gradient(90deg, #f7fbf8, #f7fbf8 10px, #e7f5ec 10px, #e7f5ec 20px);
+    }
+
+    .skin-preview.violet {
+      background:
+        linear-gradient(135deg, rgba(114, 88, 212, 0.72), rgba(22, 136, 238, 0.42)),
+        repeating-linear-gradient(45deg, #241f48, #241f48 10px, #352b63 10px, #352b63 20px);
+    }
+
+    .skin-preview.gold {
+      background:
+        linear-gradient(135deg, rgba(198, 122, 22, 0.28), rgba(217, 75, 75, 0.18)),
+        repeating-linear-gradient(90deg, #fff9ef, #fff9ef 11px, #f6ead8 11px, #f6ead8 22px);
+    }
+
+    .skin-body {
+      padding: 12px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .pipeline {
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .pipeline-row {
+      display: grid;
+      grid-template-columns: 128px minmax(0, 1fr) 110px;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .pipeline-steps {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(82px, 1fr));
+      gap: 6px;
+    }
+
+    .pipeline-step {
+      min-height: 48px;
+      border-radius: 5px;
+      border: 1px solid #dfe6ef;
+      background: #fbfcfe;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #5e6a79;
+      font-size: 12px;
+      padding: 5px;
+    }
+
+    .pipeline-step.done {
+      color: var(--green);
+      background: #edf9f2;
+      border-color: #c8ecd5;
+      font-weight: 700;
+    }
+
+    .pipeline-step.active {
+      color: var(--blue);
+      background: var(--blue-2);
+      border-color: #c8e4ff;
+      font-weight: 700;
+    }
+
     .drawer {
       position: fixed;
       top: 0;
@@ -919,18 +1239,27 @@
     @media (max-width: 1180px) {
       .metric-grid,
       .build-lanes,
+      .skin-grid,
+      .isolation-grid,
       .rule-grid {
         grid-template-columns: repeat(3, minmax(150px, 1fr));
       }
 
       .split-grid,
       .wizard,
+      .motherboard,
+      .query-layout,
       .config-layout {
         grid-template-columns: 1fr;
       }
 
-      .module-grid {
+      .module-grid,
+      .twins-grid {
         grid-template-columns: repeat(2, minmax(180px, 1fr));
+      }
+
+      .pipeline-row {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -995,6 +1324,11 @@
       .module-grid,
       .form-grid,
       .check-grid,
+      .source-flow,
+      .twins-grid,
+      .skin-grid,
+      .isolation-grid,
+      .pipeline-steps,
       .rule-grid {
         grid-template-columns: 1fr;
       }
@@ -1018,17 +1352,21 @@
       <div class="nav-section" id="sideNav">
         <div class="nav-title">全局运营</div>
         <button class="nav-item active" data-view="overview"><span class="nav-icon">01</span><span>首页统计</span></button>
-        <button class="nav-item" data-view="site"><span class="nav-icon">02</span><span>站点入口</span></button>
-        <button class="nav-item" data-view="create"><span class="nav-icon">03</span><span>开站中心</span></button>
-        <button class="nav-item" data-view="package"><span class="nav-icon">04</span><span>App 打包</span></button>
-        <button class="nav-item" data-view="config"><span class="nav-icon">05</span><span>功能配置</span></button>
+        <button class="nav-item" data-view="factory"><span class="nav-icon">02</span><span>母体架构</span></button>
+        <button class="nav-item" data-view="site"><span class="nav-icon">03</span><span>站点入口</span></button>
+        <button class="nav-item" data-view="create"><span class="nav-icon">04</span><span>开站中心</span></button>
+        <button class="nav-item" data-view="package"><span class="nav-icon">05</span><span>App / H5 打包</span></button>
+        <button class="nav-item" data-view="template"><span class="nav-icon">06</span><span>模板皮肤</span></button>
+        <button class="nav-item" data-view="query"><span class="nav-icon">07</span><span>查询中心</span></button>
+        <button class="nav-item" data-view="isolation"><span class="nav-icon">08</span><span>数据隔离</span></button>
         <div class="nav-title">站点配置</div>
-        <button class="nav-item" data-view="risk"><span class="nav-icon">06</span><span>风控管理</span></button>
-        <button class="nav-item" data-view="agent"><span class="nav-icon">07</span><span>代理活动</span></button>
-        <button class="nav-item" data-view="promo"><span class="nav-icon">08</span><span>优惠大厅</span></button>
-        <button class="nav-item" data-view="games"><span class="nav-icon">09</span><span>三方游戏</span></button>
-        <button class="nav-item" data-view="service"><span class="nav-icon">10</span><span>客服系统</span></button>
-        <button class="nav-item" data-view="system"><span class="nav-icon">11</span><span>系统管理</span></button>
+        <button class="nav-item" data-view="config"><span class="nav-icon">09</span><span>功能配置</span></button>
+        <button class="nav-item" data-view="risk"><span class="nav-icon">10</span><span>风控管理</span></button>
+        <button class="nav-item" data-view="agent"><span class="nav-icon">11</span><span>代理活动</span></button>
+        <button class="nav-item" data-view="promo"><span class="nav-icon">12</span><span>优惠大厅</span></button>
+        <button class="nav-item" data-view="games"><span class="nav-icon">13</span><span>三方游戏</span></button>
+        <button class="nav-item" data-view="service"><span class="nav-icon">14</span><span>客服系统</span></button>
+        <button class="nav-item" data-view="system"><span class="nav-icon">15</span><span>系统管理</span></button>
       </div>
     </aside>
 
@@ -1044,7 +1382,7 @@
         <select class="tenant-select" id="siteSelect">
           <option value="all">全部站点</option>
         </select>
-        <input class="search-box" id="globalSearch" placeholder="搜索 SiteID / 域名 / App 名称">
+        <input class="search-box" id="globalSearch" placeholder="搜索 SiteID / 域名 / App / 会员UID / 代理ID">
         <div class="topbar-spacer"></div>
         <button class="btn" id="syncBtn"><span class="icon-box">R</span>同步配置</button>
         <button class="btn primary" data-view="create"><span class="icon-box">N</span>新建站点</button>
@@ -1052,11 +1390,12 @@
 
       <nav class="tabs" id="tabs">
         <button class="tab active" data-view="overview"><span class="tab-dot"></span>首页统计</button>
+        <button class="tab" data-view="factory"><span class="tab-dot"></span>母体架构</button>
         <button class="tab" data-view="site"><span class="tab-dot"></span>站点总览</button>
         <button class="tab" data-view="create"><span class="tab-dot"></span>开站向导</button>
-        <button class="tab" data-view="package"><span class="tab-dot"></span>App包管理</button>
-        <button class="tab" data-view="config"><span class="tab-dot"></span>配置中心</button>
-        <button class="tab" data-view="risk"><span class="tab-dot"></span>风控标签</button>
+        <button class="tab" data-view="package"><span class="tab-dot"></span>打包流水线</button>
+        <button class="tab" data-view="query"><span class="tab-dot"></span>查询中心</button>
+        <button class="tab" data-view="isolation"><span class="tab-dot"></span>数据隔离</button>
       </nav>
 
       <main id="main"></main>
@@ -1077,19 +1416,163 @@
   </section>
 
   <script>
+    const coreVersion = "v5.0.0";
+
     const sites = [
-      { id: "S1001", platform: "星河体育", app: "星河体育 Pro", domain: "xh-sport.com", package: "iOS / Android / H5", users: 42860, register: 1268, firstPay: 392, recharge: "¥8,482,000", risk: 37, promoCost: "¥412,500", service: 28, status: "online", version: "v4.8.2" },
-      { id: "S1002", platform: "蓝鲸娱乐", app: "蓝鲸娱乐", domain: "bluegame.net", package: "Android / H5", users: 31820, register: 835, firstPay: 244, recharge: "¥5,126,300", risk: 21, promoCost: "¥236,800", service: 17, status: "online", version: "v4.8.2" },
-      { id: "S1003", platform: "新城游戏", app: "新城游戏", domain: "nova-play.cc", package: "iOS / Android", users: 18760, register: 516, firstPay: 128, recharge: "¥2,907,800", risk: 14, promoCost: "¥142,000", service: 36, status: "pending", version: "v4.7.9" },
-      { id: "S1004", platform: "翡翠电竞", app: "翡翠电竞", domain: "jade-esports.com", package: "iOS / Android / H5", users: 51270, register: 1482, firstPay: 463, recharge: "¥10,062,900", risk: 68, promoCost: "¥589,400", service: 44, status: "risk", version: "v4.8.1" },
-      { id: "S1005", platform: "鲸跃棋牌", app: "鲸跃棋牌", domain: "joy-card.net", package: "H5", users: 9360, register: 186, firstPay: 54, recharge: "¥876,200", risk: 9, promoCost: "¥51,600", service: 7, status: "gray", version: "v4.6.8" }
+      {
+        id: "S1001",
+        platform: "星河体育",
+        app: "星河体育 Pro",
+        domain: "xh-sport.com",
+        package: "iOS / Android / H5",
+        users: 42860,
+        register: 1268,
+        firstPay: 392,
+        recharge: "¥8,482,000",
+        risk: 37,
+        promoCost: "¥412,500",
+        service: 28,
+        status: "online",
+        version: coreVersion,
+        brand: "XH",
+        skin: "体育深蓝",
+        template: "H5-Sport-01 / App-Native-A",
+        agentMode: "合营分红",
+        dataShard: "db_site_s1001",
+        namespace: "site.s1001",
+        assetBucket: "assets-s1001",
+        apiNamespace: "/api/s1001",
+        bundle: "com.factory.xhsport",
+        h5Env: "prod-h5-xh",
+        nativeBuild: "Jenkins Runner A",
+        logoClass: "",
+        isolation: "独立 Schema"
+      },
+      {
+        id: "S1002",
+        platform: "蓝鲸娱乐",
+        app: "蓝鲸娱乐",
+        domain: "bluegame.net",
+        package: "Android / H5",
+        users: 31820,
+        register: 835,
+        firstPay: 244,
+        recharge: "¥5,126,300",
+        risk: 21,
+        promoCost: "¥236,800",
+        service: 17,
+        status: "online",
+        version: coreVersion,
+        brand: "LJ",
+        skin: "娱乐亮色",
+        template: "H5-Light-02 / App-Native-B",
+        agentMode: "多级代理",
+        dataShard: "db_site_s1002",
+        namespace: "site.s1002",
+        assetBucket: "assets-s1002",
+        apiNamespace: "/api/s1002",
+        bundle: "com.factory.bluegame",
+        h5Env: "prod-h5-lj",
+        nativeBuild: "Jenkins Runner B",
+        logoClass: "green",
+        isolation: "独立 Schema"
+      },
+      {
+        id: "S1003",
+        platform: "新城游戏",
+        app: "新城游戏",
+        domain: "nova-play.cc",
+        package: "iOS / Android",
+        users: 18760,
+        register: 516,
+        firstPay: 128,
+        recharge: "¥2,907,800",
+        risk: 14,
+        promoCost: "¥142,000",
+        service: 36,
+        status: "pending",
+        version: "v4.9.3",
+        brand: "XC",
+        skin: "标准轻量",
+        template: "H5-Base-01 / App-Native-A",
+        agentMode: "一级代理",
+        dataShard: "db_site_s1003",
+        namespace: "site.s1003",
+        assetBucket: "assets-s1003",
+        apiNamespace: "/api/s1003",
+        bundle: "com.factory.novaplay",
+        h5Env: "gray-h5-xc",
+        nativeBuild: "Jenkins Runner A",
+        logoClass: "amber",
+        isolation: "灰度隔离"
+      },
+      {
+        id: "S1004",
+        platform: "翡翠电竞",
+        app: "翡翠电竞",
+        domain: "jade-esports.com",
+        package: "iOS / Android / H5",
+        users: 51270,
+        register: 1482,
+        firstPay: 463,
+        recharge: "¥10,062,900",
+        risk: 68,
+        promoCost: "¥589,400",
+        service: 44,
+        status: "risk",
+        version: coreVersion,
+        brand: "JD",
+        skin: "电竞紫",
+        template: "H5-Esport-03 / App-Native-C",
+        agentMode: "渠道 CPA",
+        dataShard: "db_site_s1004",
+        namespace: "site.s1004",
+        assetBucket: "assets-s1004",
+        apiNamespace: "/api/s1004",
+        bundle: "com.factory.jadeesport",
+        h5Env: "prod-h5-jd",
+        nativeBuild: "Jenkins Runner C",
+        logoClass: "violet",
+        isolation: "高敏隔离"
+      },
+      {
+        id: "S1005",
+        platform: "鲸跃棋牌",
+        app: "鲸跃棋牌",
+        domain: "joy-card.net",
+        package: "H5",
+        users: 9360,
+        register: 186,
+        firstPay: 54,
+        recharge: "¥876,200",
+        risk: 9,
+        promoCost: "¥51,600",
+        service: 7,
+        status: "gray",
+        version: "v4.8.8",
+        brand: "JY",
+        skin: "棋牌金色",
+        template: "H5-Card-02",
+        agentMode: "多级代理",
+        dataShard: "db_site_s1005",
+        namespace: "site.s1005",
+        assetBucket: "assets-s1005",
+        apiNamespace: "/api/s1005",
+        bundle: "h5.only.joycard",
+        h5Env: "prod-h5-jy",
+        nativeBuild: "H5 Only",
+        logoClass: "amber",
+        isolation: "轻量隔离"
+      }
     ];
 
     const metrics = [
-      ["总站点数", "32", "本周新增 4 个", "up"],
+      ["母体版本", coreVersion, "统一源码主干", "up"],
+      ["子站点数", "32", "本周新增 4 个", "up"],
       ["运行中 App", "86", "7 个待审核", "up"],
       ["昨日注册", "8,642", "环比 +12.4%", "up"],
       ["昨日充值", "¥31.8M", "环比 +6.8%", "up"],
+      ["H5 部署", "32", "CDN 全量托管", "up"],
       ["风控命中", "426", "高危 39 条", "down"],
       ["客服待处理", "132", "超时 11 单", "down"]
     ];
@@ -1117,10 +1600,80 @@
     ];
 
     const packageRows = [
-      ["PKG-20260703-01", "星河体育 Pro", "iOS", "v4.8.2", "素材校验", "灰度包", "68%", "2026-07-03 15:22"],
-      ["PKG-20260703-02", "蓝鲸娱乐", "Android", "v4.8.2", "构建中", "正式包", "42%", "2026-07-03 15:40"],
-      ["PKG-20260702-09", "翡翠电竞", "iOS", "v4.8.1", "审核中", "提审包", "100%", "2026-07-02 22:18"],
-      ["PKG-20260702-06", "新城游戏", "H5", "v4.7.9", "已发布", "H5热更", "100%", "2026-07-02 17:02"]
+      ["PKG-20260707-01", "星河体育 Pro", "iOS", coreVersion, "素材校验", "灰度包", "68%", "2026-07-07 15:22"],
+      ["PKG-20260707-02", "蓝鲸娱乐", "Android", coreVersion, "构建中", "正式包", "42%", "2026-07-07 15:40"],
+      ["PKG-20260707-03", "翡翠电竞", "iOS", coreVersion, "审核中", "提审包", "100%", "2026-07-07 14:18"],
+      ["PKG-20260707-04", "新城游戏", "H5", "v4.9.3", "已发布", "H5热更", "100%", "2026-07-07 13:02"]
+    ];
+
+    const sourceFlow = [
+      ["母体源码", "统一服务端、后台菜单、H5/App 基座"],
+      ["站点配置", "SiteID、功能开关、代理模式、风控标签"],
+      ["品牌素材", "Logo、启动图标、推广图、活动图"],
+      ["多端产物", "iOS、Android、H5 按站点独立发布"]
+    ];
+
+    const buildPipelines = [
+      {
+        site: "S1001",
+        app: "星河体育 Pro",
+        runner: "Jenkins Runner A",
+        steps: ["拉取母体源码", "注入站点配置", "合成素材包", "原生构建签名", "上传制品"],
+        active: 3,
+        status: "构建中"
+      },
+      {
+        site: "S1002",
+        app: "蓝鲸娱乐",
+        runner: "Jenkins Runner B",
+        steps: ["拉取母体源码", "注入站点配置", "合成素材包", "Android 构建", "内测分发"],
+        active: 2,
+        status: "素材校验"
+      },
+      {
+        site: "S1004",
+        app: "翡翠电竞",
+        runner: "Jenkins Runner C",
+        steps: ["拉取母体源码", "高敏风控配置", "合成素材包", "iOS 提审包", "应用商店审核"],
+        active: 4,
+        status: "审核中"
+      }
+    ];
+
+    const h5DeployRows = [
+      ["S1001", "星河体育 Pro", "H5-Sport-01", "prod-h5-xh", "m.xh-sport.com", "CDN 已刷新", "2026-07-07 14:55"],
+      ["S1002", "蓝鲸娱乐", "H5-Light-02", "prod-h5-lj", "m.bluegame.net", "灰度 30%", "2026-07-07 14:26"],
+      ["S1004", "翡翠电竞", "H5-Esport-03", "prod-h5-jd", "m.jade-esports.com", "CDN 已刷新", "2026-07-07 13:40"],
+      ["S1005", "鲸跃棋牌", "H5-Card-02", "prod-h5-jy", "m.joy-card.net", "待发布", "2026-07-07 11:12"]
+    ];
+
+    const queryRows = [
+      ["UID-829104", "会员", "S1001 星河体育", "VIP 5", "设备指纹异常", "¥128,600", "¥36,200", "AG-30018", "最近登录 2 分钟前"],
+      ["AG-30018", "代理", "S1001 星河体育", "合营 A", "团队高频提现", "¥892,000", "¥126,000", "ROOT-01", "下级 324 人"],
+      ["UID-550812", "会员", "S1004 翡翠电竞", "VIP 3", "活动薅羊毛", "¥64,300", "¥22,500", "AG-90102", "优惠领取 18 次"],
+      ["AG-90102", "代理", "S1004 翡翠电竞", "渠道 CPA", "银行卡重复", "¥421,600", "¥88,900", "ROOT-02", "待风控复核"],
+      ["UID-118307", "会员", "S1002 蓝鲸娱乐", "VIP 2", "正常", "¥22,800", "¥6,200", "AG-12011", "客服工单 1 条"]
+    ];
+
+    const isolationEvents = [
+      ["2026-07-07 15:18", "admin.ops", "切换站点", "S1001 -> S1004", "只读查看"],
+      ["2026-07-07 15:09", "risk.lead", "查询会员", "UID-550812 / S1004", "命中审计"],
+      ["2026-07-07 14:51", "build.bot", "发布配置", "site.s1002.agent", "审批通过"],
+      ["2026-07-07 14:36", "finance.ops", "导出报表", "S1001 财务日报", "水印已加"]
+    ];
+
+    const skinTemplates = [
+      ["体育深蓝", "dark", "适合体育盘、赛事首页和深色 App 壳", "S1001", "H5 / iOS / Android"],
+      ["娱乐亮色", "", "适合综合娱乐、活动大厅和新用户引导", "S1002", "H5 / Android"],
+      ["电竞紫", "violet", "适合电竞赛事、榜单、直播活动入口", "S1004", "H5 / iOS / Android"],
+      ["棋牌金色", "gold", "适合棋牌大厅、房间列表和任务活动", "S1005", "H5"]
+    ];
+
+    const agentModes = [
+      ["一级代理", "单层邀请返佣，配置简单", "新站试运营 / 轻量渠道", "S1003"],
+      ["多级代理", "多层级团队关系，按有效投注返佣", "常规娱乐平台", "S1002, S1005"],
+      ["合营分红", "按团队净输赢、成本和分红比例结算", "体育 / 大代理", "S1001"],
+      ["渠道 CPA", "按注册、首充、留存计算渠道成本", "买量 / 电竞渠道", "S1004"]
     ];
 
     const configData = {
@@ -1289,7 +1842,17 @@
       const text = state.search.trim().toLowerCase();
       return sites.filter(site => {
         const inSite = state.selectedSite === "all" || site.id === state.selectedSite;
-        const inSearch = !text || [site.id, site.platform, site.app, site.domain].join(" ").toLowerCase().includes(text);
+        const inSearch = !text || [
+          site.id,
+          site.platform,
+          site.app,
+          site.domain,
+          site.skin,
+          site.agentMode,
+          site.namespace,
+          site.dataShard,
+          site.bundle
+        ].join(" ").toLowerCase().includes(text);
         return inSite && inSearch;
       });
     }
@@ -1330,6 +1893,8 @@
                   <th>平台 / App</th>
                   <th>站点域名</th>
                   <th>端包</th>
+                  <th>模板 / 代理</th>
+                  <th>数据空间</th>
                   <th>用户数</th>
                   <th>昨日注册</th>
                   <th>首充人数</th>
@@ -1348,6 +1913,8 @@
                     <td><strong>${site.platform}</strong><br><span class="asset-meta">${site.app} ${site.version}</span></td>
                     <td>${site.domain}</td>
                     <td>${site.package}</td>
+                    <td>${site.skin}<br><span class="asset-meta">${site.agentMode}</span></td>
+                    <td>${site.namespace}<br><span class="asset-meta">${site.dataShard}</span></td>
                     <td>${numberCN(site.users)}</td>
                     <td>${numberCN(site.register)}</td>
                     <td>${numberCN(site.firstPay)}</td>
@@ -1373,12 +1940,107 @@
 
     function renderOverview() {
       main.innerHTML = `
-        ${renderHead("首页统计", "统一查看所有站点、App 端包、运营数据、风控预警和客服待处理。", `
+        ${renderHead("首页统计", "一个母体源码统一管理所有子站 App，查看各站点数据、配置差异、打包状态和风控预警。", `
           <button class="btn primary" data-view="create"><span class="icon-box">N</span>快速开站</button>
+          <button class="btn" data-view="factory"><span class="icon-box">M</span>母体架构</button>
           <button class="btn" data-view="package"><span class="icon-box">B</span>查看打包</button>
         `)}
         ${renderMetrics()}
         ${renderSiteTable()}
+      `;
+      bindMainActions();
+    }
+
+    function renderFactory() {
+      main.innerHTML = `
+        ${renderHead("母体架构", "一套服务端源码和统一后台作为母体，按 SiteID 注入配置、素材、模板和代理模式，快速派生多个独立 App / H5 站点。", `
+          <button class="btn" data-view="template"><span class="icon-box">T</span>模板皮肤</button>
+          <button class="btn primary" data-view="create"><span class="icon-box">N</span>开新站</button>
+        `)}
+        <section class="panel">
+          <div class="panel-title">
+            <span>母体源码与配置派生</span>
+            <span class="tag blue">核心版本 ${coreVersion}</span>
+          </div>
+          <div class="motherboard">
+            <article class="core-card">
+              <div class="core-title">
+                <div>
+                  <div class="core-name">Platform Core Mother</div>
+                  <div class="asset-meta">统一服务端 / 统一后台 / 统一 H5 与 App 基座</div>
+                </div>
+                <span class="tag green">单源码多站点</span>
+              </div>
+              <div class="core-desc">
+                母体只维护一套业务能力：会员、财务、代理、优惠、三方游戏、风控、客服和系统菜单。子站不复制源码，只保存自己的配置、素材包、域名、Bundle ID、代理模式和模板皮肤。
+              </div>
+              <div class="source-flow">
+                ${sourceFlow.map((item, index) => `
+                  <div class="flow-node">
+                    <span class="flow-index">${index + 1}</span>
+                    <div class="flow-name">${item[0]}</div>
+                    <div class="flow-note">${item[1]}</div>
+                  </div>
+                `).join("")}
+              </div>
+            </article>
+            <div class="twins-grid">
+              ${sites.slice(0, 4).map(site => `
+                <article class="twin-card">
+                  <div class="twin-top">
+                    <div class="app-logo ${site.logoClass}">${site.brand}</div>
+                    <div>
+                      <div class="app-name">${site.app}</div>
+                      <div class="app-sub">${site.id} / ${site.domain}</div>
+                    </div>
+                    ${statusLabel(site.status)}
+                  </div>
+                  <div class="diff-row"><strong>相同母体</strong><span>${site.version} / 共享服务端 API 与后台模块</span></div>
+                  <div class="diff-row"><strong>不同衣服</strong><span>${site.skin}，${site.template}</span></div>
+                  <div class="diff-row"><strong>代理模式</strong><span>${site.agentMode}</span></div>
+                  <div class="diff-row"><strong>数据空间</strong><span>${site.namespace} / ${site.dataShard}</span></div>
+                </article>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <span>子站派生清单</span>
+            <span class="tag">只配置差异，不复制源码</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>SiteID</th>
+                  <th>App / 平台</th>
+                  <th>母体版本</th>
+                  <th>品牌差异</th>
+                  <th>代理模式</th>
+                  <th>数据命名空间</th>
+                  <th>端覆盖</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${sites.map(site => `
+                  <tr>
+                    <td>${site.id}</td>
+                    <td><strong>${site.app}</strong><br><span class="asset-meta">${site.platform}</span></td>
+                    <td>${site.version}</td>
+                    <td>${site.skin} / ${site.assetBucket}</td>
+                    <td>${site.agentMode}</td>
+                    <td>${site.namespace}</td>
+                    <td>${site.package}</td>
+                    <td><button class="table-action" data-enter="${site.id}">进入站点</button><button class="table-action" data-pack="${site.id}">打包</button></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </section>
       `;
       bindMainActions();
     }
@@ -1390,6 +2052,31 @@
           <button class="btn" data-detail="${site.id}"><span class="icon-box">C</span>站点配置</button>
           <button class="btn primary" data-pack="${site.id}"><span class="icon-box">B</span>生成端包</button>
         `)}
+        <section class="panel">
+          <div class="panel-title">
+            <span>当前站点身份</span>
+            <span class="tag blue">${site.namespace}</span>
+          </div>
+          <div class="module-grid">
+            ${[
+              ["母体版本", site.version, "共享同一套服务端和后台源码"],
+              ["品牌皮肤", site.skin, site.template],
+              ["代理模式", site.agentMode, "决定邀请页、返佣、分红和报表口径"],
+              ["数据隔离", site.dataShard, `${site.isolation} / ${site.apiNamespace}`],
+              ["原生包身份", site.bundle, site.nativeBuild],
+              ["H5 部署", site.h5Env, `域名 ${site.domain}`]
+            ].map((item, index) => `
+              <article class="module">
+                <div class="module-top">
+                  <span class="module-name">${item[0]}</span>
+                  <span class="tag ${index % 3 === 0 ? "blue" : index % 3 === 1 ? "green" : "amber"}">已配置</span>
+                </div>
+                <div class="asset-title">${item[1]}</div>
+                <div class="asset-meta">${item[2]}</div>
+              </article>
+            `).join("")}
+          </div>
+        </section>
         <section class="panel">
           <div class="panel-title">
             <span>站点功能开关</span>
@@ -1485,7 +2172,7 @@
         <section class="panel">
           <div class="panel-title">
             <span>快速开站</span>
-            <span class="tag blue">模板：标准娱乐平台 v4.8.2</span>
+            <span class="tag blue">模板：标准娱乐平台 ${coreVersion}</span>
           </div>
           <div class="wizard">
             <div class="steps">
@@ -1522,6 +2209,22 @@
                   <label>环境</label>
                   <select><option>生产站</option><option>预发布站</option><option>测试站</option></select>
                 </div>
+                <div class="form-control">
+                  <label>App / H5 模板</label>
+                  <select><option>H5-Sport-01 / App-Native-A</option><option>H5-Light-02 / App-Native-B</option><option>H5-Esport-03 / App-Native-C</option><option>H5-Card-02</option></select>
+                </div>
+                <div class="form-control">
+                  <label>代理模式</label>
+                  <select><option>合营分红</option><option>多级代理</option><option>一级代理</option><option>渠道 CPA</option></select>
+                </div>
+                <div class="form-control">
+                  <label>数据空间</label>
+                  <input value="site.s1033 / db_site_s1033">
+                </div>
+                <div class="form-control">
+                  <label>打包 Runner</label>
+                  <select><option>Jenkins Runner A</option><option>Jenkins Runner B</option><option>Jenkins Runner C</option><option>H5 Only</option></select>
+                </div>
               </div>
               <div class="check-grid">
                 ${["会员管理", "财务中心", "代理中心", "活动管理", "优惠大厅", "三方游戏", "风控管理", "客服系统", "返水管理", "消息系统", "报表系统", "系统管理"].map((item, index) => `
@@ -1551,8 +2254,11 @@
               </thead>
               <tbody>
                 ${[
-                  ["代码版本", "统一代码仓", "v4.8.2", "已锁定", "技术组"],
+                  ["代码版本", "统一母体代码仓", coreVersion, "已锁定", "技术组"],
                   ["功能菜单", "标准模板", "启用 8 / 12", "待发布", "产品组"],
+                  ["数据隔离", "命名空间生成", "site.s1033 / 独立 Schema", "待校验", "架构组"],
+                  ["模板皮肤", "模板中心", "H5-Sport-01 / App-Native-A", "待确认", "产品组"],
+                  ["代理模式", "代理配置", "合营分红", "待发布", "代理组"],
                   ["游戏厂商", "三方配置", "AG, PG, JILI", "待校验", "游戏组"],
                   ["客服入口", "客服配置", "在线客服 A", "待确认", "客服组"],
                   ["活动素材", "素材库", "Logo 1 / Banner 6", "待审核", "运营组"]
@@ -1576,14 +2282,14 @@
 
     function renderPackage() {
       main.innerHTML = `
-        ${renderHead("App包管理", "统一代码按不同站点输出不同端包，站点差异来自 Logo、推广图、活动图、域名和配置。", `
+        ${renderHead("App / H5 打包", "构建机拉取同一套母体源码，再注入站点配置包与素材包，输出 iOS、Android 和 H5 产物；构建过程不依赖业务服务器运行。", `
           <button class="btn"><span class="icon-box">V</span>版本配置</button>
           <button class="btn primary"><span class="icon-box">B</span>新建打包</button>
         `)}
         <section class="panel">
           <div class="panel-title">
-            <span>打包流水线</span>
-            <span class="tag blue">当前版本 v4.8.2</span>
+            <span>打包任务概览</span>
+            <span class="tag blue">当前母体版本 ${coreVersion}</span>
           </div>
           <div class="build-lanes">
             ${[
@@ -1599,6 +2305,66 @@
                 <div class="mini-chart">${lane[2].map(v => `<span style="height:${v}%"></span>`).join("")}</div>
               </div>
             `).join("")}
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <span>Jenkins 式构建流水线</span>
+            <span class="tag green">母体源码 + 配置包 + 素材包</span>
+          </div>
+          <div class="pipeline">
+            ${buildPipelines.map(pipe => `
+              <div class="pipeline-row">
+                <div>
+                  <strong>${pipe.site}</strong>
+                  <div class="asset-meta">${pipe.app}<br>${pipe.runner}</div>
+                </div>
+                <div class="pipeline-steps">
+                  ${pipe.steps.map((step, index) => `
+                    <div class="pipeline-step ${index < pipe.active ? "done" : index === pipe.active ? "active" : ""}">${step}</div>
+                  `).join("")}
+                </div>
+                <span class="status ${pipe.status === "审核中" ? "pending" : pipe.status === "构建中" ? "gray" : "online"}">${pipe.status}</span>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <span>H5 部署与域名发布</span>
+            <span class="tag blue">独立 CDN / 独立环境</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>SiteID</th>
+                  <th>App</th>
+                  <th>H5 模板</th>
+                  <th>部署环境</th>
+                  <th>访问域名</th>
+                  <th>CDN 状态</th>
+                  <th>最后部署</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${h5DeployRows.map(row => `
+                  <tr>
+                    <td>${row[0]}</td>
+                    <td>${row[1]}</td>
+                    <td>${row[2]}</td>
+                    <td>${row[3]}</td>
+                    <td>${row[4]}</td>
+                    <td><span class="status ${row[5] === "待发布" ? "pending" : row[5].includes("灰度") ? "gray" : "online"}">${row[5]}</span></td>
+                    <td>${row[6]}</td>
+                    <td><button class="table-action">发布</button><button class="table-action">回滚</button><button class="table-action">日志</button></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
           </div>
         </section>
 
@@ -1728,6 +2494,268 @@
       bindMainActions();
     }
 
+    function renderTemplate() {
+      main.innerHTML = `
+        ${renderHead("模板皮肤", "不同子站选择不同 App / H5 模板、皮肤和代理模式；核心功能仍然来自同一套母体代码。", `
+          <button class="btn"><span class="icon-box">C</span>复制模板</button>
+          <button class="btn primary"><span class="icon-box">N</span>新增模板</button>
+        `)}
+        <section class="panel">
+          <div class="panel-title">
+            <span>App 与 H5 皮肤库</span>
+            <span class="tag blue">按站点绑定</span>
+          </div>
+          <div class="skin-grid">
+            ${skinTemplates.map(item => `
+              <article class="skin-card">
+                <div class="skin-preview ${item[1]}"></div>
+                <div class="skin-body">
+                  <div class="module-top">
+                    <span class="module-name">${item[0]}</span>
+                    <span class="tag green">${item[4]}</span>
+                  </div>
+                  <div class="asset-meta">${item[2]}</div>
+                  <div class="module-tags">
+                    <span class="tag blue">绑定 ${item[3]}</span>
+                    <span class="tag">可复制</span>
+                  </div>
+                </div>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+
+        <div class="split-grid">
+          <section class="panel">
+            <div class="panel-title">
+              <span>代理模式模板</span>
+              <span class="tag">影响前端入口和后台报表</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>模式</th>
+                    <th>规则说明</th>
+                    <th>适用场景</th>
+                    <th>绑定站点</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${agentModes.map(row => `
+                    <tr>
+                      <td><strong>${row[0]}</strong></td>
+                      <td>${row[1]}</td>
+                      <td>${row[2]}</td>
+                      <td>${row[3]}</td>
+                      <td><button class="table-action">编辑</button><button class="table-action">复制到站点</button></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title">
+              <span>功能加减法矩阵</span>
+              <span class="tag blue">模板默认值</span>
+            </div>
+            <div class="check-grid" style="padding:12px;">
+              ${modules.map((module, index) => `
+                <label class="check-item">
+                  <input type="checkbox" ${module.on ? "checked" : ""}>
+                  ${module.name}
+                  <span class="tag ${index % 2 === 0 ? "blue" : "green"}" style="margin-left:auto;">${module.owner}</span>
+                </label>
+              `).join("")}
+            </div>
+          </section>
+        </div>
+      `;
+      bindMainActions();
+    }
+
+    function renderQuery() {
+      main.innerHTML = `
+        ${renderHead("查询中心", "总控可按权限跨站查询会员、代理和流水；进入单站后只看该站点自己的数据，避免串站操作。", `
+          <button class="btn"><span class="icon-box">E</span>导出带水印</button>
+          <button class="btn primary"><span class="icon-box">Q</span>发起查询</button>
+        `)}
+        <section class="panel">
+          <div class="query-layout">
+            <div>
+              <div class="toolbar" style="padding:0 0 12px;">
+                <div class="field"><label>查询对象</label><input value="UID-829104 / AG-30018"></div>
+                <div class="field"><label>站点范围</label><select><option>全部站点</option><option>S1001 星河体育</option><option>S1004 翡翠电竞</option></select></div>
+                <div class="field"><label>时间</label><input value="2026-07-01 至 2026-07-07"></div>
+                <button class="btn primary"><span class="icon-box">Q</span>查询</button>
+              </div>
+              <div class="panel-title" style="padding-left:0;">
+                <span>会员 / 代理结果</span>
+                <span class="tag">${queryRows.length} 条</span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>对象ID</th>
+                      <th>类型</th>
+                      <th>站点</th>
+                      <th>等级 / 模式</th>
+                      <th>风控标签</th>
+                      <th>充值</th>
+                      <th>提现</th>
+                      <th>上级代理</th>
+                      <th>备注</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${queryRows.map(row => `
+                      <tr>
+                        <td>${row[0]}</td>
+                        <td>${row[1]}</td>
+                        <td>${row[2]}</td>
+                        <td>${row[3]}</td>
+                        <td><span class="status ${row[4] === "正常" ? "online" : row[4].includes("异常") || row[4].includes("重复") ? "risk" : "pending"}">${row[4]}</span></td>
+                        <td>${row[5]}</td>
+                        <td>${row[6]}</td>
+                        <td>${row[7]}</td>
+                        <td>${row[8]}</td>
+                        <td><button class="table-action">详情</button><button class="table-action">审计</button></td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <aside class="quick-query">
+              <div class="panel-title" style="padding:0; border:0;">
+                <span>查询模式</span>
+              </div>
+              <div class="query-mode">
+                <button class="mode-btn active">会员</button>
+                <button class="mode-btn">代理</button>
+                <button class="mode-btn">流水</button>
+              </div>
+              <div class="form-control">
+                <label>权限边界</label>
+                <select><option>总控只读</option><option>站点运营</option><option>风控复核</option><option>财务审批</option></select>
+              </div>
+              <div class="asset-title">查询边界</div>
+              <div class="asset-meta">跨站查询必须记录操作者、目标站点、查询原因和导出水印。进入站点入口后，默认只展示当前 SiteID 的会员、代理、报表和菜单数据。</div>
+              <div class="module-tags">
+                <span class="tag blue">站点隔离</span>
+                <span class="tag green">审计留痕</span>
+                <span class="tag amber">权限审批</span>
+              </div>
+            </aside>
+          </div>
+        </section>
+      `;
+      bindMainActions();
+    }
+
+    function renderIsolation() {
+      main.innerHTML = `
+        ${renderHead("数据隔离", "每个站点有独立数据空间、配置命名空间、素材桶、域名和 App Bundle；总控通过权限层查看，不让业务数据互相污染。", `
+          <button class="btn"><span class="icon-box">A</span>审计日志</button>
+          <button class="btn primary"><span class="icon-box">S</span>隔离扫描</button>
+        `)}
+        <section class="panel">
+          <div class="panel-title">
+            <span>隔离能力</span>
+            <span class="tag blue">SiteID 是所有数据边界</span>
+          </div>
+          <div class="isolation-grid">
+            ${[
+              ["DB", "独立数据库 / Schema", "会员、财务、代理、游戏流水按 SiteID 分片"],
+              ["CFG", "配置命名空间", "功能开关、风控标签、活动规则独立发布"],
+              ["OSS", "素材与静态资源桶", "Logo、启动图、活动图和 H5 静态文件独立存储"],
+              ["ACL", "权限和审计边界", "跨站查看需要权限，查询导出自动留痕"]
+            ].map(item => `
+              <article class="isolation-card">
+                <div class="isolation-icon">${item[0]}</div>
+                <div class="module-name">${item[1]}</div>
+                <div class="asset-meta">${item[2]}</div>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <span>站点隔离清单</span>
+            <span class="tag green">运行中</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>SiteID</th>
+                  <th>数据分片</th>
+                  <th>配置命名空间</th>
+                  <th>素材桶</th>
+                  <th>H5 环境</th>
+                  <th>App Bundle</th>
+                  <th>隔离状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${sites.map(site => `
+                  <tr>
+                    <td><strong>${site.id}</strong><br><span class="asset-meta">${site.app}</span></td>
+                    <td>${site.dataShard}</td>
+                    <td>${site.namespace}</td>
+                    <td>${site.assetBucket}</td>
+                    <td>${site.h5Env}</td>
+                    <td>${site.bundle}</td>
+                    <td><span class="status ${site.status === "risk" ? "risk" : "online"}">${site.isolation}</span></td>
+                    <td><button class="table-action" data-enter="${site.id}">进入</button><button class="table-action">扫描</button></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <span>站点切换与查询审计</span>
+            <span class="tag">最近 4 条</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>时间</th>
+                  <th>操作者</th>
+                  <th>动作</th>
+                  <th>对象</th>
+                  <th>结果</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${isolationEvents.map(row => `
+                  <tr>
+                    <td>${row[0]}</td>
+                    <td>${row[1]}</td>
+                    <td>${row[2]}</td>
+                    <td>${row[3]}</td>
+                    <td><span class="status online">${row[4]}</span></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      `;
+      bindMainActions();
+    }
+
     function renderSystem() {
       main.innerHTML = `
         ${renderHead("系统管理", "角色权限、菜单模板、发布审批、操作日志和多环境参数。", `
@@ -1761,9 +2789,13 @@
 
     function render() {
       if (state.view === "overview") renderOverview();
+      if (state.view === "factory") renderFactory();
       if (state.view === "site") renderSite();
       if (state.view === "create") renderCreate();
       if (state.view === "package") renderPackage();
+      if (state.view === "template") renderTemplate();
+      if (state.view === "query") renderQuery();
+      if (state.view === "isolation") renderIsolation();
       if (state.view === "config") renderConfig();
       if (state.view === "system") renderSystem();
       syncActive(state.view === "config" ? state.section : state.view);
@@ -1818,6 +2850,30 @@
           <input value="${site.package}">
         </div>
         <div class="form-control">
+          <label>母体版本</label>
+          <input value="${site.version}">
+        </div>
+        <div class="form-control">
+          <label>App / H5 模板</label>
+          <input value="${site.template}">
+        </div>
+        <div class="form-control">
+          <label>代理模式</label>
+          <input value="${site.agentMode}">
+        </div>
+        <div class="form-control">
+          <label>数据命名空间</label>
+          <input value="${site.namespace}">
+        </div>
+        <div class="form-control">
+          <label>素材桶</label>
+          <input value="${site.assetBucket}">
+        </div>
+        <div class="form-control">
+          <label>Bundle ID</label>
+          <input value="${site.bundle}">
+        </div>
+        <div class="form-control">
           <label>客服系统</label>
           <select><option>在线客服 A</option><option>在线客服 B</option><option>第三方客服 SDK</option></select>
         </div>
@@ -1867,7 +2923,12 @@
 
     globalSearch.addEventListener("input", () => {
       state.search = globalSearch.value;
-      if (state.view !== "overview") state.view = "overview";
+      const text = state.search.trim().toUpperCase();
+      if (text.startsWith("UID") || text.startsWith("AG-")) {
+        state.view = "query";
+      } else if (state.view !== "overview") {
+        state.view = "overview";
+      }
       render();
     });
 
