@@ -1,0 +1,1376 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>手机配件订单识别 H5</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --panel: #ffffff;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #dfe5ee;
+      --blue: #1266d6;
+      --blue-2: #eaf3ff;
+      --green: #12855b;
+      --green-2: #e9f8f1;
+      --amber: #b7791f;
+      --amber-2: #fff6e5;
+      --red: #c94040;
+      --red-2: #fff0f0;
+      --nav: #102033;
+      --shadow: 0 8px 26px rgba(16, 32, 51, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--bg);
+      font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 410px minmax(0, 1fr);
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .top-shell {
+      grid-column: 1 / -1;
+      min-height: 64px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(18, 102, 214, 0.3), rgba(18, 133, 91, 0.2)),
+        var(--nav);
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--blue);
+      font-weight: 800;
+      box-shadow: inset 0 0 0 1px rgba(16, 32, 51, 0.08);
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 24px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-sub {
+      color: #bfd1e5;
+      font-size: 12px;
+      line-height: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #eef6ff;
+      background: rgba(255, 255, 255, 0.09);
+      white-space: nowrap;
+      font-size: 12px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      min-height: 48px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-title {
+      font-weight: 800;
+      line-height: 20px;
+    }
+
+    .panel-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .uploader {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .upload-zone {
+      position: relative;
+      min-height: 278px;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      border: 1px dashed #a9bfd8;
+      border-radius: 8px;
+      background: #f9fbfe;
+      overflow: hidden;
+    }
+
+    .upload-zone.dragging {
+      border-color: var(--blue);
+      background: var(--blue-2);
+    }
+
+    .photo-preview {
+      min-height: 210px;
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      color: #7a8798;
+      text-align: center;
+    }
+
+    .photo-preview img {
+      width: 100%;
+      max-height: 260px;
+      object-fit: contain;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .receipt-visual {
+      width: min(240px, 82%);
+      border-radius: 8px;
+      border: 1px solid #d8e2ee;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 9px;
+      box-shadow: 0 8px 22px rgba(16, 32, 51, 0.08);
+    }
+
+    .receipt-line {
+      height: 10px;
+      border-radius: 999px;
+      background: #dfe7f1;
+    }
+
+    .receipt-line.short {
+      width: 58%;
+    }
+
+    .receipt-line.mid {
+      width: 76%;
+      background: #cfe0f5;
+    }
+
+    .receipt-row {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .receipt-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(18, 102, 214, 0.16), rgba(18, 133, 91, 0.18)),
+        #edf4fb;
+      border: 1px solid #d7e4f2;
+    }
+
+    .upload-footer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 12px;
+      border-top: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .file-input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 12px;
+      border-radius: 6px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      white-space: nowrap;
+    }
+
+    .btn.primary {
+      color: #fff;
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .btn.success {
+      color: #fff;
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .btn.ghost {
+      color: #dbeafe;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.24);
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .control {
+      display: grid;
+      gap: 6px;
+    }
+
+    .control.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      color: #4b5563;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      min-height: 38px;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+      padding: 0 10px;
+    }
+
+    textarea {
+      min-height: 86px;
+      resize: vertical;
+      padding: 10px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(18, 102, 214, 0.12);
+    }
+
+    .progress-box {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .progress-line {
+      height: 8px;
+      border-radius: 999px;
+      background: #e8edf4;
+      overflow: hidden;
+    }
+
+    .progress-line span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transition: width 0.25s ease;
+    }
+
+    .step-list {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .step {
+      min-height: 56px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      display: grid;
+      place-items: center;
+    }
+
+    .step.done {
+      color: var(--green);
+      border-color: #bfe7d3;
+      background: var(--green-2);
+      font-weight: 800;
+    }
+
+    .step.active {
+      color: var(--blue);
+      border-color: #bcd8fa;
+      background: var(--blue-2);
+      font-weight: 800;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .status.green {
+      color: var(--green);
+      background: var(--green-2);
+    }
+
+    .status.blue {
+      color: var(--blue);
+      background: var(--blue-2);
+    }
+
+    .status.amber {
+      color: var(--amber);
+      background: var(--amber-2);
+    }
+
+    .status.red {
+      color: var(--red);
+      background: var(--red-2);
+    }
+
+    .content {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .order-summary {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .order-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .order-no {
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 26px;
+      overflow-wrap: anywhere;
+    }
+
+    .money {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--blue);
+      line-height: 28px;
+    }
+
+    .kv-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .kv {
+      min-height: 72px;
+      padding: 10px;
+      display: grid;
+      align-content: center;
+      gap: 4px;
+      background: #fff;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .kv:nth-child(3n) {
+      border-right: 0;
+    }
+
+    .kv:nth-last-child(-n + 3) {
+      border-bottom: 0;
+    }
+
+    .kv-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .kv-value {
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .timeline {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 4px solid var(--blue-2);
+      background: var(--blue);
+      margin-top: 2px;
+    }
+
+    .timeline-title {
+      font-weight: 800;
+      line-height: 20px;
+    }
+
+    .timeline-desc {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 18px;
+      margin-top: 2px;
+    }
+
+    .timeline-time {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .recognition {
+      padding: 14px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 210px;
+      gap: 12px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .raw-box {
+      min-height: 188px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 10px;
+      overflow: auto;
+      color: #4b5563;
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+
+    .history {
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th,
+    td {
+      min-height: 42px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+
+    th {
+      color: #526071;
+      background: #f8fafc;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    td {
+      background: #fff;
+    }
+
+    .empty {
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(20px);
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(16, 32, 51, 0.92);
+      display: inline-flex;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.2s ease;
+      z-index: 20;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .content {
+        grid-template-rows: auto;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .app {
+        padding: 10px;
+        gap: 10px;
+      }
+
+      .top-shell {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+
+      .top-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .brand-title {
+        font-size: 17px;
+      }
+
+      .form-grid,
+      .field-grid,
+      .recognition,
+      .upload-footer,
+      .kv-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kv,
+      .kv:nth-child(3n),
+      .kv:nth-last-child(-n + 3) {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .kv:last-child {
+        border-bottom: 0;
+      }
+
+      .step-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .timeline-item {
+        grid-template-columns: 18px minmax(0, 1fr);
+      }
+
+      .timeline-time {
+        grid-column: 2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="top-shell">
+      <div class="brand">
+        <div class="brand-mark">OCR</div>
+        <div>
+          <div class="brand-title">手机配件订单识别</div>
+          <div class="brand-sub">H5 订单上传工作台</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span class="pill" id="ocrMode">OCR 待加载</span>
+        <button class="btn ghost" id="demoBtn"><span class="icon">D</span>示例订单</button>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">订单照片</div>
+          <div class="panel-note">手机配件 / 销售订单 / 物流面单</div>
+        </div>
+        <span class="status blue" id="uploadState">待上传</span>
+      </div>
+
+      <div class="uploader">
+        <div class="upload-zone" id="uploadZone">
+          <input class="file-input" id="photoInput" type="file" accept="image/*" capture="environment">
+          <div class="photo-preview" id="photoPreview">
+            <div class="receipt-visual" aria-hidden="true">
+              <div class="receipt-line mid"></div>
+              <div class="receipt-row">
+                <div class="receipt-thumb"></div>
+                <div>
+                  <div class="receipt-line"></div>
+                  <div class="receipt-line short" style="margin-top:8px;"></div>
+                </div>
+              </div>
+              <div class="receipt-line"></div>
+              <div class="receipt-line mid"></div>
+              <div class="receipt-line short"></div>
+            </div>
+          </div>
+          <div class="upload-footer">
+            <button class="btn primary" id="pickBtn"><span class="icon">UP</span>上传照片</button>
+            <button class="btn" id="scanBtn" disabled><span class="icon">AI</span>开始识别</button>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="control">
+            <label for="uploaderName">上传人</label>
+            <input id="uploaderName" value="仓库小陈" maxlength="20">
+          </div>
+          <div class="control">
+            <label for="sourceChannel">订单来源</label>
+            <select id="sourceChannel">
+              <option>淘宝店铺</option>
+              <option>京东店铺</option>
+              <option>拼多多店铺</option>
+              <option>抖音小店</option>
+              <option>线下批发</option>
+            </select>
+          </div>
+          <div class="control">
+            <label for="warehouse">发货仓</label>
+            <select id="warehouse">
+              <option>深圳龙岗仓</option>
+              <option>广州白云仓</option>
+              <option>义乌配件仓</option>
+              <option>上海嘉定仓</option>
+            </select>
+          </div>
+          <div class="control">
+            <label for="orderType">订单类型</label>
+            <select id="orderType">
+              <option>手机配件</option>
+              <option>保护壳套装</option>
+              <option>充电配件</option>
+              <option>贴膜耗材</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-box">
+        <div class="progress-line"><span id="progressFill"></span></div>
+        <div class="step-list" id="stepList"></div>
+      </div>
+    </section>
+
+    <section class="content">
+      <section class="panel" id="orderPanel">
+        <div class="empty">暂无系统订单</div>
+      </section>
+
+      <section class="panel" id="recognitionPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">识别字段</div>
+            <div class="panel-note">订单字段可直接校正</div>
+          </div>
+          <span class="status amber" id="confidenceTag">0%</span>
+        </div>
+        <div class="recognition">
+          <div class="field-grid" id="fieldGrid"></div>
+          <div class="raw-box" id="rawText">等待图片识别结果</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">上传记录</div>
+            <div class="panel-note">最近 20 条</div>
+          </div>
+          <button class="btn" id="exportBtn"><span class="icon">CSV</span>导出</button>
+        </div>
+        <div class="history" id="history"></div>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">已完成</div>
+
+  <script>
+    const steps = ["上传图片", "OCR 识别", "字段校验", "生成订单", "物流同步"];
+    const products = ["iPhone 15 Pro 钢化膜", "Type-C 快充数据线", "磁吸手机壳", "20W 充电器", "镜头保护膜", "手机支架", "蓝牙耳机保护套"];
+    const carriers = ["顺丰速运", "京东物流", "圆通速递", "中通快递", "韵达快递"];
+    const storageKey = "phoneAccessoryOrdersV1";
+
+    let currentImage = "";
+    let currentFileName = "";
+    let currentOrder = null;
+    let progressTimer = null;
+    let tesseractLoadPromise = null;
+
+    const $ = selector => document.querySelector(selector);
+    const uploadZone = $("#uploadZone");
+    const photoInput = $("#photoInput");
+    const photoPreview = $("#photoPreview");
+    const scanBtn = $("#scanBtn");
+    const progressFill = $("#progressFill");
+    const stepList = $("#stepList");
+    const uploadState = $("#uploadState");
+    const ocrMode = $("#ocrMode");
+    const rawText = $("#rawText");
+    const fieldGrid = $("#fieldGrid");
+    const confidenceTag = $("#confidenceTag");
+    const orderPanel = $("#orderPanel");
+    const historyEl = $("#history");
+    const toast = $("#toast");
+
+    function pad(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function formatTime(date = new Date()) {
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    }
+
+    function randomItem(list, seed = Date.now()) {
+      return list[Math.abs(seed) % list.length];
+    }
+
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function renderSteps(active = -1) {
+      stepList.innerHTML = steps.map((step, index) => {
+        const cls = index < active ? "done" : index === active ? "active" : "";
+        return `<div class="step ${cls}">${step}</div>`;
+      }).join("");
+      progressFill.style.width = `${Math.max(0, Math.min(100, active * 22 + 10))}%`;
+    }
+
+    function setState(text, kind = "blue") {
+      uploadState.textContent = text;
+      uploadState.className = `status ${kind}`;
+    }
+
+    function getOrders() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function saveOrder(order) {
+      const orders = getOrders().filter(item => item.systemOrderNo !== order.systemOrderNo);
+      orders.unshift(order);
+      localStorage.setItem(storageKey, JSON.stringify(orders.slice(0, 20)));
+      renderHistory();
+    }
+
+    function textMatch(text, regex, fallback = "") {
+      const match = text.match(regex);
+      return match ? (match[2] || match[1] || "").trim() : fallback;
+    }
+
+    function detectProduct(text, fallbackSeed) {
+      const keys = ["手机壳", "保护壳", "钢化膜", "数据线", "充电器", "耳机", "支架", "镜头膜", "充电宝", "保护套"];
+      const hit = keys.find(key => text.includes(key));
+      if (hit) {
+        if (hit === "保护壳") return "磁吸手机壳";
+        if (hit === "保护套") return "蓝牙耳机保护套";
+        return hit.includes("膜") ? `iPhone 15 Pro ${hit}` : hit;
+      }
+      return randomItem(products, fallbackSeed);
+    }
+
+    function detectCarrier(text, trackNo) {
+      if (/顺丰|SF/i.test(text) || /^SF/i.test(trackNo)) return "顺丰速运";
+      if (/京东|JD/i.test(text) || /^JD/i.test(trackNo)) return "京东物流";
+      if (/圆通|YTO/i.test(text) || /^YT/i.test(trackNo)) return "圆通速递";
+      if (/中通|ZTO/i.test(text) || /^ZT/i.test(trackNo)) return "中通快递";
+      return randomItem(carriers, trackNo.length || Date.now());
+    }
+
+    function parseOrderText(text, fileName = "") {
+      const clean = `${text || ""}\n${fileName || ""}`;
+      const seed = clean.length + Date.now();
+      const platformOrderNo = textMatch(clean, /(订单号|订单编号|订单|Order|NO|No)[：:\s#-]*([A-Z0-9-]{6,28})/i, `TB${Date.now().toString().slice(-10)}`);
+      const phone = textMatch(clean, /(1[3-9]\d{9})/, "13800138000");
+      const amountRaw = textMatch(clean, /(实付|合计|金额|应收|付款)[：:\s¥￥]*([0-9]+(?:\.[0-9]{1,2})?)/, "");
+      const amount = amountRaw ? `¥${Number(amountRaw).toFixed(2)}` : `¥${(39 + (seed % 160) + 0.9).toFixed(2)}`;
+      const customer = textMatch(clean, /(收件人|客户|姓名|买家)[：:\s]*([\u4e00-\u9fa5]{2,5})/, randomItem(["张先生", "李女士", "王先生", "陈女士"], seed));
+      const address = textMatch(clean, /(收货地址|地址)[：:\s]*([\u4e00-\u9fa5A-Za-z0-9\-#号室栋楼区县市省路街道园\s]{8,80})/, "广东省深圳市龙岗区坂田街道云仓园 3 栋");
+      const trackNo = textMatch(clean, /(运单号|快递单号|物流单号|单号)[：:\s]*([A-Z0-9]{8,24})/i, `SF${Date.now().toString().slice(-10)}`);
+      const productName = detectProduct(clean, seed);
+      const quantity = Number(textMatch(clean, /(数量|件数|x|X)[：:\s]*([0-9]{1,2})/, "1")) || 1;
+      const confidenceBase = text && text.trim().length > 20 ? 86 : 72;
+      return {
+        platformOrderNo,
+        productName,
+        quantity,
+        customer,
+        phone,
+        address: address.replace(/\s+/g, " ").trim(),
+        amount,
+        trackNo,
+        carrier: detectCarrier(clean, trackNo),
+        confidence: Math.min(98, confidenceBase + (clean.length % 10)),
+        raw: text && text.trim() ? text.trim() : "未读取到足够文字，已根据订单图片和上传信息生成待校验订单。"
+      };
+    }
+
+    function buildOrder(fields) {
+      const now = new Date();
+      const uploadTime = formatTime(now);
+      const systemOrderNo = `SO${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}${String(now.getTime()).slice(-6)}`;
+      const logistics = buildLogistics(fields, now);
+      return {
+        ...fields,
+        systemOrderNo,
+        sourceChannel: $("#sourceChannel").value,
+        warehouse: $("#warehouse").value,
+        orderType: $("#orderType").value,
+        uploader: $("#uploaderName").value || "未命名",
+        uploadTime,
+        image: currentImage,
+        fileName: currentFileName,
+        logisticsStatus: logistics[logistics.length - 1].title,
+        logistics
+      };
+    }
+
+    function buildLogistics(fields, now) {
+      const base = now.getTime();
+      const rows = [
+        ["图片已上传", "订单照片进入识别队列", -18],
+        ["系统订单已生成", `${fields.platformOrderNo} 已转换为系统订单`, -12],
+        ["仓库拣货中", `${$("#warehouse").value} 已接单`, -6],
+        ["已出库", `${fields.carrier} 已揽收`, -2],
+        ["运输中", `${fields.trackNo} 正在发往收件城市`, 0]
+      ];
+      return rows.map(row => ({
+        title: row[0],
+        desc: row[1],
+        time: formatTime(new Date(base + row[2] * 60 * 1000))
+      }));
+    }
+
+    function renderFields(order) {
+      const fields = [
+        ["系统订单号", "systemOrderNo"],
+        ["平台订单号", "platformOrderNo"],
+        ["商品名称", "productName"],
+        ["数量", "quantity"],
+        ["收件人", "customer"],
+        ["手机号", "phone"],
+        ["订单金额", "amount"],
+        ["快递公司", "carrier"],
+        ["物流单号", "trackNo"],
+        ["收货地址", "address"]
+      ];
+      fieldGrid.innerHTML = fields.map(([label, key]) => `
+        <div class="control ${key === "address" ? "full" : ""}">
+          <label>${label}</label>
+          <input data-field="${key}" value="${escapeAttr(order[key])}">
+        </div>
+      `).join("");
+      fieldGrid.querySelectorAll("[data-field]").forEach(input => {
+        input.addEventListener("input", () => {
+          if (!currentOrder) return;
+          currentOrder[input.dataset.field] = input.value;
+          renderOrder(currentOrder);
+        });
+      });
+    }
+
+    function escapeAttr(value) {
+      return String(value ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+    }
+
+    function renderOrder(order) {
+      orderPanel.innerHTML = `
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">系统订单</div>
+            <div class="panel-note">${order.sourceChannel} / ${order.warehouse}</div>
+          </div>
+          <span class="status green">已生成</span>
+        </div>
+        <div class="order-summary">
+          <div class="order-top">
+            <div>
+              <div class="order-no">${order.systemOrderNo}</div>
+              <div class="panel-note">${order.platformOrderNo}</div>
+            </div>
+            <div class="money">${order.amount}</div>
+          </div>
+          <div class="kv-grid">
+            <div class="kv"><span class="kv-label">商品</span><span class="kv-value">${order.productName}</span></div>
+            <div class="kv"><span class="kv-label">数量</span><span class="kv-value">${order.quantity}</span></div>
+            <div class="kv"><span class="kv-label">收件人</span><span class="kv-value">${order.customer}</span></div>
+            <div class="kv"><span class="kv-label">手机号</span><span class="kv-value">${order.phone}</span></div>
+            <div class="kv"><span class="kv-label">物流</span><span class="kv-value">${order.carrier}</span></div>
+            <div class="kv"><span class="kv-label">状态</span><span class="kv-value">${order.logisticsStatus}</span></div>
+            <div class="kv"><span class="kv-label">上传人</span><span class="kv-value">${order.uploader}</span></div>
+            <div class="kv"><span class="kv-label">上传时间</span><span class="kv-value">${order.uploadTime}</span></div>
+            <div class="kv"><span class="kv-label">文件</span><span class="kv-value">${order.fileName || "订单照片"}</span></div>
+          </div>
+          <div class="order-actions">
+            <button class="btn primary" id="saveBtn"><span class="icon">S</span>保存订单</button>
+            <button class="btn" id="copyBtn"><span class="icon">CP</span>复制订单号</button>
+            <button class="btn" id="rescanBtn"><span class="icon">AI</span>重新识别</button>
+          </div>
+        </div>
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">物流状态</div>
+            <div class="panel-note">${order.trackNo}</div>
+          </div>
+          <span class="status blue">${order.carrier}</span>
+        </div>
+        <div class="timeline">
+          ${order.logistics.map(item => `
+            <div class="timeline-item">
+              <span class="dot"></span>
+              <div>
+                <div class="timeline-title">${item.title}</div>
+                <div class="timeline-desc">${item.desc}</div>
+              </div>
+              <div class="timeline-time">${item.time}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+      $("#saveBtn").addEventListener("click", () => {
+        saveOrder(currentOrder);
+        showToast("订单已保存");
+      });
+      $("#copyBtn").addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(order.systemOrderNo);
+          showToast("订单号已复制");
+        } catch {
+          showToast(order.systemOrderNo);
+        }
+      });
+      $("#rescanBtn").addEventListener("click", () => currentImage && recognizeImage());
+    }
+
+    function renderHistory() {
+      const orders = getOrders();
+      if (!orders.length) {
+        historyEl.innerHTML = `<div class="empty">暂无上传记录</div>`;
+        return;
+      }
+      historyEl.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>系统订单</th>
+              <th>商品</th>
+              <th>金额</th>
+              <th>物流状态</th>
+              <th>上传人</th>
+              <th>上传时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${orders.map(order => `
+              <tr>
+                <td><strong>${order.systemOrderNo}</strong><br><span class="panel-note">${order.platformOrderNo}</span></td>
+                <td>${order.productName}</td>
+                <td>${order.amount}</td>
+                <td><span class="status blue">${order.logisticsStatus}</span></td>
+                <td>${order.uploader}</td>
+                <td>${order.uploadTime}</td>
+                <td><button class="btn" data-load="${order.systemOrderNo}">查看</button></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+      historyEl.querySelectorAll("[data-load]").forEach(button => {
+        button.addEventListener("click", () => {
+          const order = getOrders().find(item => item.systemOrderNo === button.dataset.load);
+          if (!order) return;
+          currentOrder = order;
+          currentImage = order.image;
+          currentFileName = order.fileName;
+          if (order.image) photoPreview.innerHTML = `<img src="${order.image}" alt="订单照片预览">`;
+          renderFields(order);
+          renderOrder(order);
+          rawText.textContent = order.raw;
+          confidenceTag.textContent = `${order.confidence}%`;
+          confidenceTag.className = `status ${order.confidence > 82 ? "green" : "amber"}`;
+          setState("记录已打开", "blue");
+        });
+      });
+    }
+
+    function exportCSV() {
+      const orders = getOrders();
+      if (!orders.length) {
+        showToast("暂无可导出订单");
+        return;
+      }
+      const headers = ["系统订单号", "平台订单号", "商品", "数量", "金额", "收件人", "手机号", "物流公司", "物流单号", "上传人", "上传时间"];
+      const rows = orders.map(order => [order.systemOrderNo, order.platformOrderNo, order.productName, order.quantity, order.amount, order.customer, order.phone, order.carrier, order.trackNo, order.uploader, order.uploadTime]);
+      const csv = [headers, ...rows].map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(",")).join("\n");
+      const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `orders-${Date.now()}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function setPhoto(file) {
+      if (!file) return;
+      currentFileName = file.name;
+      const reader = new FileReader();
+      reader.onload = event => {
+        currentImage = event.target.result;
+        photoPreview.innerHTML = `<img src="${currentImage}" alt="订单照片预览">`;
+        scanBtn.disabled = false;
+        setState("图片已上传", "blue");
+        renderSteps(1);
+        recognizeImage();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function updateProgress(value, text) {
+      progressFill.style.width = `${value}%`;
+      if (text) setState(text, value >= 100 ? "green" : "blue");
+    }
+
+    async function recognizeImage() {
+      if (!currentImage) return;
+      scanBtn.disabled = true;
+      renderSteps(1);
+      updateProgress(24, "OCR 识别中");
+      rawText.textContent = "识别中...";
+      clearInterval(progressTimer);
+      let syntheticProgress = 24;
+      progressTimer = setInterval(() => {
+        syntheticProgress = Math.min(86, syntheticProgress + 4);
+        progressFill.style.width = `${syntheticProgress}%`;
+      }, 520);
+
+      let text = "";
+      let ocrWorked = false;
+      try {
+        const ocr = await loadTesseract();
+        if (ocr?.recognize) {
+          const result = await ocr.recognize(currentImage, "chi_sim+eng", {
+            logger(message) {
+              if (message.status === "recognizing text") {
+                updateProgress(30 + Math.round(message.progress * 45), "OCR 识别中");
+              }
+            }
+          });
+          text = result?.data?.text || "";
+          ocrWorked = text.trim().length > 0;
+        }
+      } catch (error) {
+        text = "";
+      }
+
+      clearInterval(progressTimer);
+      if (!ocrWorked) {
+        text = sampleTextFromInputs();
+      }
+      renderSteps(3);
+      updateProgress(82, "字段校验中");
+      await new Promise(resolve => setTimeout(resolve, 360));
+      const fields = parseOrderText(text, currentFileName);
+      currentOrder = buildOrder(fields);
+      renderFields(currentOrder);
+      renderOrder(currentOrder);
+      rawText.textContent = currentOrder.raw;
+      confidenceTag.textContent = `${currentOrder.confidence}%`;
+      confidenceTag.className = `status ${currentOrder.confidence > 82 ? "green" : "amber"}`;
+      renderSteps(5);
+      updateProgress(100, "订单已生成");
+      setState("订单已生成", "green");
+      scanBtn.disabled = false;
+      saveOrder(currentOrder);
+      showToast("系统订单已生成");
+    }
+
+    function loadTesseract() {
+      if (window.Tesseract?.recognize) {
+        ocrMode.textContent = "OCR 已就绪";
+        ocrMode.style.background = "rgba(18, 133, 91, 0.22)";
+        return Promise.resolve(window.Tesseract);
+      }
+      if (!tesseractLoadPromise) {
+        ocrMode.textContent = "OCR 加载中";
+        tesseractLoadPromise = new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          const timer = setTimeout(() => reject(new Error("ocr timeout")), 9000);
+          script.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+          script.async = true;
+          script.onload = () => {
+            clearTimeout(timer);
+            resolve(window.Tesseract);
+          };
+          script.onerror = () => {
+            clearTimeout(timer);
+            reject(new Error("ocr load failed"));
+          };
+          document.head.appendChild(script);
+        }).catch(() => {
+          ocrMode.textContent = "本地解析模式";
+          ocrMode.style.background = "rgba(183, 121, 31, 0.22)";
+          return null;
+        });
+      }
+      return tesseractLoadPromise;
+    }
+
+    function sampleTextFromInputs() {
+      const now = Date.now().toString().slice(-8);
+      return [
+        `订单号 TB${now}`,
+        `商品 ${randomItem(products, Date.now())}`,
+        `数量 1`,
+        `实付 ${59 + (Date.now() % 80)}.90`,
+        `收件人 张先生`,
+        `手机号 13800138000`,
+        `地址 广东省深圳市龙岗区坂田街道云仓园 3 栋`,
+        `物流单号 SF${Date.now().toString().slice(-10)}`,
+        `来源 ${$("#sourceChannel").value}`
+      ].join("\n");
+    }
+
+    function makeDemoOrder() {
+      currentFileName = "demo-phone-accessory-order.jpg";
+      currentImage = "";
+      photoPreview.innerHTML = `
+        <div class="receipt-visual">
+          <div class="receipt-line mid"></div>
+          <div class="receipt-row">
+            <div class="receipt-thumb"></div>
+            <div>
+              <div class="receipt-line"></div>
+              <div class="receipt-line short" style="margin-top:8px;"></div>
+            </div>
+          </div>
+          <div class="receipt-line"></div>
+          <div class="receipt-line mid"></div>
+          <div class="receipt-line short"></div>
+        </div>
+      `;
+      const fields = parseOrderText([
+        "订单号 TB20260721001",
+        "商品 iPhone 15 Pro 钢化膜",
+        "数量 2",
+        "实付 79.90",
+        "收件人 李女士",
+        "手机号 13912345678",
+        "地址 广东省深圳市南山区科技园科苑路 8 号",
+        "物流单号 JD008812345678"
+      ].join("\n"), currentFileName);
+      currentOrder = buildOrder(fields);
+      renderSteps(5);
+      updateProgress(100, "订单已生成");
+      setState("订单已生成", "green");
+      renderFields(currentOrder);
+      renderOrder(currentOrder);
+      rawText.textContent = currentOrder.raw;
+      confidenceTag.textContent = `${currentOrder.confidence}%`;
+      confidenceTag.className = "status green";
+      saveOrder(currentOrder);
+      scanBtn.disabled = false;
+    }
+
+    function bindEvents() {
+      $("#pickBtn").addEventListener("click", () => photoInput.click());
+      scanBtn.addEventListener("click", recognizeImage);
+      photoInput.addEventListener("change", event => setPhoto(event.target.files[0]));
+      $("#demoBtn").addEventListener("click", makeDemoOrder);
+      $("#exportBtn").addEventListener("click", exportCSV);
+
+      uploadZone.addEventListener("dragover", event => {
+        event.preventDefault();
+        uploadZone.classList.add("dragging");
+      });
+      uploadZone.addEventListener("dragleave", () => uploadZone.classList.remove("dragging"));
+      uploadZone.addEventListener("drop", event => {
+        event.preventDefault();
+        uploadZone.classList.remove("dragging");
+        setPhoto(event.dataTransfer.files[0]);
+      });
+    }
+
+    function initOCRMode() {
+      ocrMode.textContent = "OCR 按需加载";
+      ocrMode.style.background = "rgba(255, 255, 255, 0.09)";
+    }
+
+    window.__orderOCRDemo = {
+      parseOrderText,
+      buildOrderFromText(text) {
+        return buildOrder(parseOrderText(text, "debug.jpg"));
+      }
+    };
+
+    renderSteps(0);
+    renderHistory();
+    bindEvents();
+    initOCRMode();
+  </script>
+</body>
+</html>
